@@ -1,27 +1,17 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>BookMySeat</title>
 
-    <!-- Font Awesome for social icons -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-
     <style>
-
-        /* =====================================================
-           GENERAL
-        ===================================================== */
 
         * {
             box-sizing: border-box;
@@ -35,7 +25,6 @@
             color: #222;
         }
 
-
         /* =====================================================
            NAVBAR
         ===================================================== */
@@ -44,52 +33,40 @@
             width: 100%;
             height: 58px;
             background: #343a40;
-
             display: flex;
             align-items: center;
-
             padding: 0;
         }
-
 
         .navbar-container {
             width: 100%;
             max-width: 1060px;
-
             margin: 0 auto;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0 15px;
         }
-
 
         .navbar-logo {
             display: flex;
             align-items: center;
-
             color: white;
             text-decoration: none;
-
             font-size: 16px;
         }
-
 
         .navbar-logo img {
             width: 38px;
             height: 38px;
-
             object-fit: contain;
-
             margin-right: 8px;
         }
-
 
         .navbar-logo span {
             color: white;
             font-size: 16px;
         }
-
 
         .navbar-right {
             display: flex;
@@ -97,22 +74,16 @@
             gap: 18px;
         }
 
-
         .navbar-right a {
             color: #d5d5d5;
-
             text-decoration: none;
-
             font-size: 14px;
-
             white-space: nowrap;
         }
-
 
         .navbar-right a:hover {
             color: white;
         }
-
 
         /* =====================================================
            MAIN CONTAINER
@@ -121,10 +92,8 @@
         .main-container {
             width: 90%;
             max-width: 1250px;
-
             margin: 0 auto;
         }
-
 
         /* =====================================================
            BANNER SLIDER
@@ -132,43 +101,29 @@
 
         .carousel {
             position: relative;
-
             width: 100%;
-
             overflow: hidden;
-
             background: #000;
         }
 
-
         .carousel-inner {
             display: flex;
-
             width: 100%;
-
             transition: transform 0.6s ease-in-out;
         }
 
-
         .carousel-item {
             flex: 0 0 100%;
-
             width: 100%;
-
             position: relative;
         }
 
-
         .carousel-item img {
             display: block;
-
             width: 100%;
-
             height: 300px;
-
             object-fit: cover;
         }
-
 
         /* =====================================================
            SLIDER INDICATORS
@@ -176,48 +131,31 @@
 
         .carousel-indicators {
             position: absolute;
-
             bottom: 12px;
-
             left: 0;
             right: 0;
-
             display: flex;
-
             justify-content: center;
-
             gap: 8px;
-
             margin: 0;
-
             padding: 0;
-
             list-style: none;
-
             z-index: 20;
         }
-
 
         .carousel-indicators li {
             width: 35px;
             height: 4px;
-
             border: none;
-
             background: white;
-
             opacity: 0.45;
-
             cursor: pointer;
-
             transition: opacity 0.3s ease;
         }
-
 
         .carousel-indicators li.active {
             opacity: 1;
         }
-
 
         /* =====================================================
            LEFT / RIGHT ARROWS
@@ -226,64 +164,42 @@
         .carousel-control-prev,
         .carousel-control-next {
             position: absolute;
-
             top: 0;
             bottom: 0;
-
             width: 70px;
-
             border: none;
-
             background: transparent;
-
             color: white;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             cursor: pointer;
-
             z-index: 30;
-
             font-size: 38px;
-
             text-decoration: none;
-
             transition: background 0.2s ease;
         }
-
 
         .carousel-control-prev {
             left: 0;
         }
 
-
         .carousel-control-next {
             right: 0;
         }
-
 
         .carousel-control-prev:hover,
         .carousel-control-next:hover {
             background: rgba(0, 0, 0, 0.15);
         }
 
-
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
             font-size: 42px;
-
             font-weight: normal;
-
             color: white;
-
-            text-shadow:
-                0 2px 5px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
         }
-
 
         /* =====================================================
            LOGIN MESSAGE
@@ -291,23 +207,16 @@
 
         .login-message {
             background: #d9f3f8;
-
             padding: 12px;
-
             margin: 12px 0 25px 0;
-
             font-size: 14px;
         }
 
-
         .login-message a {
             font-weight: bold;
-
             color: #222;
-
             text-decoration: none;
         }
-
 
         /* =====================================================
            SECTION
@@ -315,23 +224,16 @@
 
         .section {
             width: 100%;
-
             margin-bottom: 30px;
         }
 
-
         .section-title {
             font-size: 18px;
-
             font-weight: bold;
-
             margin: 0 0 10px 0;
-
             padding-bottom: 8px;
-
             border-bottom: 2px solid #159bd7;
         }
-
 
         /* =====================================================
            RECOMMENDED MOVIES
@@ -339,48 +241,53 @@
 
         .movie-container {
             display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
+            grid-template-columns: repeat(4, 1fr);
             gap: 18px;
         }
 
-
         .movie-card {
             background: white;
-
             border: 1px solid #ddd;
-
-            box-shadow:
-                0 2px 5px rgba(0, 0, 0, 0.12);
-
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
             overflow: hidden;
+            border-radius: 4px;
         }
-
 
         .movie-card img {
             width: 100%;
-
-            height: 240px;
-
+            height: 300px;
             object-fit: cover;
-
             display: block;
         }
-
 
         .movie-info {
             padding: 10px;
         }
 
-
         .movie-info h3 {
             margin: 0 0 8px 0;
-
             font-size: 16px;
         }
 
+        .movie-info p {
+            font-size: 13px;
+            margin: 5px 0;
+        }
+
+        .movie-button {
+            display: inline-block;
+            background: #343a40;
+            color: white;
+            text-decoration: none;
+            padding: 7px 12px;
+            font-size: 12px;
+            border-radius: 3px;
+            margin-top: 6px;
+        }
+
+        .movie-button:hover {
+            background: #159bd7;
+        }
 
         /* =====================================================
            HORIZONTAL SECTIONS
@@ -388,36 +295,25 @@
 
         .horizontal-container {
             display: flex;
-
             gap: 18px;
-
             overflow-x: auto;
-
             overflow-y: hidden;
-
-            padding:
-                2px 2px 10px 2px;
-
+            padding: 2px 2px 10px 2px;
             scroll-behavior: smooth;
         }
-
 
         .horizontal-container::-webkit-scrollbar {
             height: 8px;
         }
 
-
         .horizontal-container::-webkit-scrollbar-thumb {
             background: #aaa;
-
             border-radius: 10px;
         }
-
 
         .horizontal-container::-webkit-scrollbar-track {
             background: #eee;
         }
-
 
         /* =====================================================
            COMMON CARD
@@ -425,33 +321,19 @@
 
         .item-card {
             flex: 0 0 220px;
-
             background: white;
-
             border: 1px solid #ddd;
-
             border-radius: 4px;
-
             overflow: hidden;
-
-            box-shadow:
-                0 2px 5px rgba(0, 0, 0, 0.12);
-
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
             cursor: pointer;
-
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-
 
         .item-card:hover {
             transform: translateY(-5px);
-
-            box-shadow:
-                0 6px 14px rgba(0, 0, 0, 0.20);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.20);
         }
-
 
         /* =====================================================
            CARD IMAGE
@@ -459,36 +341,23 @@
 
         .item-card-image {
             width: 100%;
-
             height: 250px;
-
             overflow: hidden;
-
             background: #fff;
         }
 
-
         .item-card-image img {
             width: 100%;
-
             height: 100%;
-
             object-fit: cover;
-
             object-position: center;
-
             display: block;
-
-            transition:
-                transform 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
-
-        .item-card:hover
-        .item-card-image img {
+        .item-card:hover .item-card-image img {
             transform: scale(1.04);
         }
-
 
         /* =====================================================
            CARD TITLE
@@ -496,18 +365,12 @@
 
         .item-card-title {
             min-height: 45px;
-
             padding: 10px;
-
             display: flex;
-
             align-items: center;
-
             font-size: 14px;
-
             color: #222;
         }
-
 
         /* =====================================================
            PREMIERE
@@ -517,12 +380,9 @@
             flex: 0 0 240px;
         }
 
-
-        .premiere-card
-        .item-card-image {
+        .premiere-card .item-card-image {
             height: 300px;
         }
-
 
         /* =====================================================
            MUSIC
@@ -532,12 +392,9 @@
             flex: 0 0 190px;
         }
 
-
-        .music-card
-        .item-card-image {
+        .music-card .item-card-image {
             height: 190px;
         }
-
 
         /* =====================================================
            EVENT
@@ -547,12 +404,9 @@
             flex: 0 0 220px;
         }
 
-
-        .event-card
-        .item-card-image {
+        .event-card .item-card-image {
             height: 250px;
         }
-
 
         /* =====================================================
            FOOTER
@@ -560,142 +414,84 @@
 
         .main-footer {
             width: 100%;
-
             background-color: #343a40;
-
             color: white;
-
             margin-top: 60px;
-
-            padding:
-                25px 0 40px 0;
+            padding: 25px 0 40px 0;
         }
-
 
         .main-footer .container {
             width: 90%;
-
             max-width: 1250px;
-
             margin: 0 auto;
         }
-
-
-        /* Three footer columns */
 
         .footer-row {
             display: grid;
-
-            grid-template-columns:
-                1fr 1fr 1fr;
-
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 60px;
-
             max-width: 1250px;
-
             margin: 0 auto;
         }
 
-
-        /* Footer headings */
-
         .footer-title {
             font-size: 23px;
-
             font-weight: normal;
-
-            margin:
-                0 0 10px 0;
-
+            margin: 0 0 10px 0;
             color: white;
         }
-
-
-        /* About text */
 
         .footer-text {
             color: white;
-
             font-size: 18px;
-
             line-height: 1.5;
-
             margin: 0;
         }
-
-
-        /* Quick links */
 
         .footer-links {
             list-style: none;
-
             padding: 0;
-
             margin: 0;
         }
-
 
         .footer-links li {
             margin-bottom: 6px;
         }
 
-
         .footer-links a {
             color: white;
-
             text-decoration: none;
-
             font-size: 18px;
         }
-
 
         .footer-links a:hover {
             text-decoration: underline;
         }
 
-
-        /* Social icons */
-
         .social-icons {
             display: flex;
-
             align-items: center;
-
             gap: 25px;
         }
 
-
         .social-icons a {
             color: white;
-
             font-size: 28px;
-
             text-decoration: none;
         }
-
 
         .social-icons a:hover {
             color: #ddd;
         }
 
-
-        /* Footer divider and copyright */
-
         .footer-bottom {
-            border-top:
-                1px solid #3f474d;
-
+            border-top: 1px solid #3f474d;
             margin-top: 40px;
-
             padding-top: 30px;
-
             text-align: center;
-
             color: white;
-
             font-size: 18px;
         }
-
 
         /* =====================================================
            RESPONSIVE
@@ -707,56 +503,43 @@
                 width: 94%;
             }
 
-
             .movie-container {
-                grid-template-columns:
-                    repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
-
 
             .navbar {
                 padding: 0 20px;
             }
 
-
             .carousel-item img {
                 height: 260px;
             }
 
-
             .footer-row {
                 gap: 30px;
             }
-
         }
-
 
         @media (max-width: 700px) {
 
             .footer-row {
                 grid-template-columns: 1fr;
-
                 gap: 25px;
             }
-
 
             .footer-title {
                 font-size: 20px;
             }
-
 
             .footer-text,
             .footer-links a {
                 font-size: 16px;
             }
 
-
             .footer-bottom {
                 font-size: 15px;
             }
-
         }
-
 
         @media (max-width: 600px) {
 
@@ -764,49 +547,39 @@
                 grid-template-columns: 1fr;
             }
 
-
             .navbar-logo {
                 position: static;
-
                 transform: none;
             }
-
 
             .navbar-right {
                 gap: 7px;
             }
 
-
             .navbar-right a {
                 font-size: 11px;
             }
 
-
             .carousel-item img {
                 height: 200px;
             }
-
 
             .carousel-control-prev,
             .carousel-control-next {
                 width: 50px;
             }
 
-
             .carousel-control-prev-icon,
             .carousel-control-next-icon {
                 font-size: 30px;
             }
-
         }
 
     </style>
 
 </head>
 
-
 <body>
-
 
 <!-- =====================================================
      NAVBAR
@@ -816,11 +589,7 @@
 
     <div class="navbar-container">
 
-
-        <!-- LOGO -->
-
-        <a href="{% url 'home' %}"
-           class="navbar-logo">
+        <a href="{% url 'home' %}" class="navbar-logo">
 
             <img src="{% static 'images/logo.png' %}"
                  alt="BookMySeat">
@@ -831,27 +600,21 @@
 
         </a>
 
-
-        <!-- NAVIGATION -->
-
         <div class="navbar-right">
 
             <a href="{% url 'home' %}">
                 Home
             </a>
 
-
             <a href="{% url 'movie_list' %}">
                 Movies
             </a>
-
 
             {% if user.is_authenticated %}
 
                 <a href="{% url 'profile' %}">
                     Profile
                 </a>
-
 
                 <a href="{% url 'logout' %}">
                     Logout
@@ -862,7 +625,6 @@
                 <a href="{% url 'login' %}">
                     Login
                 </a>
-
 
                 <a href="{% url 'register' %}">
                     Register
@@ -891,28 +653,18 @@
     <div id="carouselExampleIndicators"
          class="carousel">
 
-
-        <!-- INDICATORS -->
-
         <ol class="carousel-indicators">
 
-            <li data-slide-to="0"
-                class="active">
-            </li>
+            <li data-slide-to="0" class="active"></li>
 
-            <li data-slide-to="1">
-            </li>
+            <li data-slide-to="1"></li>
 
-            <li data-slide-to="2">
-            </li>
+            <li data-slide-to="2"></li>
 
         </ol>
 
 
-        <!-- SLIDES -->
-
         <div class="carousel-inner">
-
 
             <!-- FIRST SLIDE -->
 
@@ -949,8 +701,6 @@
         </div>
 
 
-        <!-- LEFT ARROW -->
-
         <button
             class="carousel-control-prev"
             type="button"
@@ -962,8 +712,6 @@
 
         </button>
 
-
-        <!-- RIGHT ARROW -->
 
         <button
             class="carousel-control-next"
@@ -1021,10 +769,21 @@
 
             <div class="movie-card">
 
-                <img
-                    src="{{ movie.image.url }}"
-                    alt="{{ movie.name }}"
-                >
+                {% if movie.image %}
+
+                    <img
+                        src="{{ movie.image.url }}"
+                        alt="{{ movie.name }}"
+                        loading="lazy">
+
+                {% else %}
+
+                    <img
+                        src="{% static 'images/default-movie.jpg' %}"
+                        alt="{{ movie.name }}"
+                        loading="lazy">
+
+                {% endif %}
 
 
                 <div class="movie-info">
@@ -1033,9 +792,22 @@
                         {{ movie.name }}
                     </h3>
 
-                    <!-- Keep your existing movie
-                         rating, cast and Book Now
-                         code here if you have it -->
+                    {% if movie.rating %}
+                        <p>
+                            ⭐ {{ movie.rating }}/10
+                        </p>
+                    {% endif %}
+
+                    {% if movie.genre %}
+                        <p>
+                            Genre: {{ movie.genre }}
+                        </p>
+                    {% endif %}
+
+                    <a href="{% url 'movie_list' %}"
+                       class="movie-button">
+                        View Movies
+                    </a>
 
                 </div>
 
@@ -1073,10 +845,21 @@
 
                 <div class="item-card-image">
 
+                    {% if event.image %}
+
                     <img
                         src="{{ event.image.url }}"
                         alt="{{ event.title }}"
-                    >
+                        loading="lazy">
+
+                    {% else %}
+
+                    <img
+                        src="{% static 'images/default-event.jpg' %}"
+                        alt="{{ event.title }}"
+                        loading="lazy">
+
+                    {% endif %}
 
                 </div>
 
@@ -1121,10 +904,21 @@
 
                 <div class="item-card-image">
 
+                    {% if premiere.image %}
+
                     <img
                         src="{{ premiere.image.url }}"
                         alt="{{ premiere.title }}"
-                    >
+                        loading="lazy">
+
+                    {% else %}
+
+                    <img
+                        src="{% static 'images/default-movie.jpg' %}"
+                        alt="{{ premiere.title }}"
+                        loading="lazy">
+
+                    {% endif %}
 
                 </div>
 
@@ -1162,16 +956,28 @@
 
 
         <div class="horizontal-container">
-{% for music in music_studios %}
+
+            {% for music in music_studios %}
 
             <div class="item-card music-card">
 
                 <div class="item-card-image">
 
+                    {% if music.image %}
+
                     <img
                         src="{{ music.image.url }}"
                         alt="{{ music.title }}"
-                    >
+                        loading="lazy">
+
+                    {% else %}
+
+                    <img
+                        src="{% static 'images/default-music.jpg' %}"
+                        alt="{{ music.title }}"
+                        loading="lazy">
+
+                    {% endif %}
 
                 </div>
 
@@ -1208,20 +1014,13 @@
 
     <div class="container">
 
-
-        <!-- THREE COLUMNS -->
-
         <div class="footer-row">
-
-
-            <!-- ABOUT US -->
 
             <div>
 
                 <h4 class="footer-title">
                     About Us
                 </h4>
-
 
                 <p class="footer-text">
 
@@ -1238,50 +1037,36 @@
             </div>
 
 
-            <!-- QUICK LINKS -->
-
             <div>
 
                 <h4 class="footer-title">
                     Quick Links
                 </h4>
 
-
                 <ul class="footer-links">
 
                     <li>
-
                         <a href="{% url 'home' %}">
                             Home
                         </a>
-
                     </li>
 
-
                     <li>
-
                         <a href="{% url 'movie_list' %}">
                             Movies
                         </a>
-
                     </li>
 
-
                     <li>
-
                         <a href="{% url 'movie_list' %}">
                             Book Tickets
                         </a>
-
                     </li>
 
-
                     <li>
-
                         <a href="#">
                             Contact
                         </a>
-
                     </li>
 
                 </ul>
@@ -1289,41 +1074,25 @@
             </div>
 
 
-            <!-- FOLLOW US -->
-
             <div>
 
                 <h4 class="footer-title">
                     Follow Us
                 </h4>
 
-
                 <div class="social-icons">
 
-
-                    <a href="#"
-                       aria-label="Facebook">
-
+                    <a href="#" aria-label="Facebook">
                         <i class="fab fa-facebook"></i>
-
                     </a>
 
-
-                    <a href="#"
-                       aria-label="Twitter">
-
+                    <a href="#" aria-label="Twitter">
                         <i class="fab fa-twitter"></i>
-
                     </a>
 
-
-                    <a href="#"
-                       aria-label="Instagram">
-
+                    <a href="#" aria-label="Instagram">
                         <i class="fab fa-instagram"></i>
-
                     </a>
-
 
                 </div>
 
@@ -1331,8 +1100,6 @@
 
         </div>
 
-
-        <!-- FOOTER BOTTOM -->
 
         <div class="footer-bottom">
 
@@ -1364,38 +1131,23 @@
         document.querySelectorAll(".carousel-indicators li");
 
 
-    /* =====================================================
-       SHOW SLIDE
-    ===================================================== */
-
     function showSlide(index) {
 
         if (index >= slides.length) {
-
             index = 0;
-
         }
-
 
         if (index < 0) {
-
             index = slides.length - 1;
-
         }
 
-
         currentSlide = index;
-
-
-        /* Move exactly one complete slide */
 
         carouselInner.style.transform =
             "translateX(-" +
             (currentSlide * 100) +
             "%)";
 
-
-        /* Update indicators */
 
         indicators.forEach(function(indicator) {
 
@@ -1414,10 +1166,6 @@
     }
 
 
-    /* =====================================================
-       NEXT SLIDE
-    ===================================================== */
-
     function nextSlide() {
 
         showSlide(currentSlide + 1);
@@ -1425,20 +1173,12 @@
     }
 
 
-    /* =====================================================
-       PREVIOUS SLIDE
-    ===================================================== */
-
     function prevSlide() {
 
         showSlide(currentSlide - 1);
 
     }
 
-
-    /* =====================================================
-       INDICATOR CLICK
-    ===================================================== */
 
     indicators.forEach(function(indicator, index) {
 
@@ -1454,21 +1194,12 @@
     });
 
 
-    /* =====================================================
-       AUTOMATIC SLIDER
-       Changes every 1 second
-    ===================================================== */
-
     setInterval(function() {
 
         nextSlide();
 
-    }, 1000);
+    }, 4000);
 
-
-    /* =====================================================
-       START FIRST SLIDE
-    ===================================================== */
 
     showSlide(0);
 

@@ -50,6 +50,7 @@ except ImportError:
 # HOME
 # ==========================================================
 
+
 def home(request):
     movies = Movie.objects.all()
     events = Event.objects.all()
@@ -66,7 +67,6 @@ def home(request):
             'music_studios': music_studios,
         }
     )
-
 # ==========================================================
 # TASK 5
 # MOVIE DISCOVERY
