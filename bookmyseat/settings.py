@@ -3,6 +3,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 try:
     from dotenv import load_dotenv
     load_dotenv(BASE_DIR / ".env")
@@ -11,18 +12,23 @@ except ImportError:
 
 
 SECRET_KEY = os.getenv(
-    "SECRET_KEY",
-    os.getenv("DJANGO_SECRET_KEY", "")
+    "DJANGO_SECRET_KEY",
+    os.getenv("SECRET_KEY", "")
 )
 
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
+
+render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME", "")
 
 ALLOWED_HOSTS = [
     "bookmyseat-lduz.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
+
+if render_host:
+    ALLOWED_HOSTS.append(render_host)
 
 
 CSRF_TRUSTED_ORIGINS = [
@@ -37,7 +43,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "users",
     "movies",
 ]
@@ -91,20 +96,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME":
-            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME":
-            "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME":
-            "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME":
-            "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -197,7 +198,7 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 SITE_BASE_URL = os.getenv(
     "SITE_BASE_URL",
-    "http://127.0.0.1:8000"
+    "https://bookmyseat-lduz.onrender.com"
 )
 
 
