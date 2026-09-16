@@ -4,12 +4,17 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# Load .env for local development
 try:
     from dotenv import load_dotenv
     load_dotenv(BASE_DIR / ".env")
 except ImportError:
     pass
 
+
+# --------------------------------------------------
+# SECURITY
+# --------------------------------------------------
 
 SECRET_KEY = os.getenv(
     "SECRET_KEY",
@@ -19,12 +24,15 @@ SECRET_KEY = os.getenv(
     )
 )
 
+DEBUG = os.getenv(
+    "DEBUG",
+    "False"
+).strip().lower() == "true"
 
-DEBUG = os.getenv("DEBUG", "False").strip().lower() == "true"
 
-
+# Temporary fix for Render DisallowedHost error
 ALLOWED_HOSTS = [
-    "*",
+    "*"
 ]
 
 
@@ -39,6 +47,10 @@ SECURE_PROXY_SSL_HEADER = (
 )
 
 
+# --------------------------------------------------
+# APPLICATIONS
+# --------------------------------------------------
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -52,34 +64,60 @@ INSTALLED_APPS = [
 ]
 
 
+# --------------------------------------------------
+# MIDDLEWARE
+# --------------------------------------------------
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
+
     "django.middleware.common.CommonMiddleware",
+
     "django.middleware.csrf.CsrfViewMiddleware",
+
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+
     "django.contrib.messages.middleware.MessageMiddleware",
+
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 
-AUTH_USER_MODEL = "auth.User"
+# --------------------------------------------------
+# URL / WSGI
+# --------------------------------------------------
 
+AUTH_USER_MODEL = "auth.User"
 
 ROOT_URLCONF = "bookmyseat.urls"
 
+WSGI_APPLICATION = "bookmyseat.wsgi.application"
+
+
+# --------------------------------------------------
+# TEMPLATES
+# --------------------------------------------------
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "BACKEND":
+            "django.template.backends.django.DjangoTemplates",
+
         "DIRS": [
             BASE_DIR / "templates",
         ],
-        "APP_DIRS": True,
+
+        "APP_DIRS":
+            True,
+
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+
                 "django.contrib.auth.context_processors.auth",
+
                 "django.contrib.messages.context_processors.messages",
             ],
         },
@@ -87,16 +125,24 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = "bookmyseat.wsgi.application"
-
+# --------------------------------------------------
+# DATABASE
+# --------------------------------------------------
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE":
+            "django.db.backends.sqlite3",
+
+        "NAME":
+            BASE_DIR / "db.sqlite3",
     }
 }
 
+
+# --------------------------------------------------
+# PASSWORD VALIDATION
+# --------------------------------------------------
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -118,6 +164,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# --------------------------------------------------
+# INTERNATIONALIZATION
+# --------------------------------------------------
+
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "Asia/Kolkata"
@@ -126,6 +176,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+# --------------------------------------------------
+# STATIC FILES
+# --------------------------------------------------
 
 STATIC_URL = "/static/"
 
@@ -136,12 +190,22 @@ STATICFILES_DIRS = [
 ]
 
 
+# --------------------------------------------------
+# MEDIA FILES
+# --------------------------------------------------
+
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
 
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# --------------------------------------------------
+# EMAIL
+# --------------------------------------------------
+
+EMAIL_BACKEND = (
+    "django.core.mail.backends.smtp.EmailBackend"
+)
 
 EMAIL_HOST = "smtp.gmail.com"
 
@@ -165,6 +229,10 @@ DEFAULT_FROM_EMAIL = os.getenv(
 )
 
 
+# --------------------------------------------------
+# STRIPE
+# --------------------------------------------------
+
 STRIPE_PUBLISHABLE_KEY = os.getenv(
     "STRIPE_PUBLISHABLE_KEY",
     "",
@@ -180,6 +248,10 @@ STRIPE_WEBHOOK_SECRET = os.getenv(
     "",
 )
 
+
+# --------------------------------------------------
+# CELERY
+# --------------------------------------------------
 
 CELERY_BROKER_URL = os.getenv(
     "CELERY_BROKER_URL",
@@ -204,10 +276,20 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 
+# --------------------------------------------------
+# WEBSITE URL
+# --------------------------------------------------
+
 SITE_BASE_URL = os.getenv(
     "SITE_BASE_URL",
     "http://127.0.0.1:8000",
 )
 
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# --------------------------------------------------
+# DEFAULT PRIMARY KEY
+# --------------------------------------------------
+
+DEFAULT_AUTO_FIELD = (
+    "django.db.models.BigAutoField"
+)
