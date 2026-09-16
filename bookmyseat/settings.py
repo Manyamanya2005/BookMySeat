@@ -4,7 +4,10 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Load .env for local development
+# ============================================================
+# LOAD ENVIRONMENT VARIABLES
+# ============================================================
+
 try:
     from dotenv import load_dotenv
     load_dotenv(BASE_DIR / ".env")
@@ -12,9 +15,9 @@ except ImportError:
     pass
 
 
-# --------------------------------------------------
+# ============================================================
 # SECURITY
-# --------------------------------------------------
+# ============================================================
 
 SECRET_KEY = os.getenv(
     "SECRET_KEY",
@@ -24,15 +27,13 @@ SECRET_KEY = os.getenv(
     )
 )
 
-DEBUG = os.getenv(
-    "DEBUG",
-    "False"
-).strip().lower() == "true"
+DEBUG = os.getenv("DEBUG", "False").strip().lower() == "true"
 
 
-# Temporary fix for Render DisallowedHost error
 ALLOWED_HOSTS = [
-    "*"
+    "bookmyseat-lduz.onrender.com",
+    "localhost",
+    "127.0.0.1",
 ]
 
 
@@ -47,9 +48,9 @@ SECURE_PROXY_SSL_HEADER = (
 )
 
 
-# --------------------------------------------------
+# ============================================================
 # APPLICATIONS
-# --------------------------------------------------
+# ============================================================
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -64,53 +65,47 @@ INSTALLED_APPS = [
 ]
 
 
-# --------------------------------------------------
-# MIDDLEWARE
-# --------------------------------------------------
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 
     "django.contrib.sessions.middleware.SessionMiddleware",
-
     "django.middleware.common.CommonMiddleware",
-
     "django.middleware.csrf.CsrfViewMiddleware",
-
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-
     "django.contrib.messages.middleware.MessageMiddleware",
-
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
-# --------------------------------------------------
-# URL / WSGI
-# --------------------------------------------------
+# ============================================================
+# AUTHENTICATION
+# ============================================================
 
 AUTH_USER_MODEL = "auth.User"
+
+
+# ============================================================
+# URL / WSGI
+# ============================================================
 
 ROOT_URLCONF = "bookmyseat.urls"
 
 WSGI_APPLICATION = "bookmyseat.wsgi.application"
 
 
-# --------------------------------------------------
+# ============================================================
 # TEMPLATES
-# --------------------------------------------------
+# ============================================================
 
 TEMPLATES = [
     {
-        "BACKEND":
-            "django.template.backends.django.DjangoTemplates",
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
 
         "DIRS": [
             BASE_DIR / "templates",
         ],
 
-        "APP_DIRS":
-            True,
+        "APP_DIRS": True,
 
         "OPTIONS": {
             "context_processors": [
@@ -125,24 +120,22 @@ TEMPLATES = [
 ]
 
 
-# --------------------------------------------------
+# ============================================================
 # DATABASE
-# --------------------------------------------------
+# ============================================================
 
 DATABASES = {
     "default": {
-        "ENGINE":
-            "django.db.backends.sqlite3",
+        "ENGINE": "django.db.backends.sqlite3",
 
-        "NAME":
-            BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
 
-# --------------------------------------------------
+# ============================================================
 # PASSWORD VALIDATION
-# --------------------------------------------------
+# ============================================================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -164,9 +157,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# --------------------------------------------------
+# ============================================================
 # INTERNATIONALIZATION
-# --------------------------------------------------
+# ============================================================
 
 LANGUAGE_CODE = "en-us"
 
@@ -176,32 +169,31 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # --------------------------------------------------
 # STATIC FILES
 # --------------------------------------------------
 
 STATIC_URL = "/static/"
-
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# --------------------------------------------------
+# ============================================================
 # MEDIA FILES
-# --------------------------------------------------
+# ============================================================
 
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
 
 
-# --------------------------------------------------
+# ============================================================
 # EMAIL
-# --------------------------------------------------
+# ============================================================
 
 EMAIL_BACKEND = (
     "django.core.mail.backends.smtp.EmailBackend"
@@ -229,9 +221,9 @@ DEFAULT_FROM_EMAIL = os.getenv(
 )
 
 
-# --------------------------------------------------
+# ============================================================
 # STRIPE
-# --------------------------------------------------
+# ============================================================
 
 STRIPE_PUBLISHABLE_KEY = os.getenv(
     "STRIPE_PUBLISHABLE_KEY",
@@ -249,9 +241,9 @@ STRIPE_WEBHOOK_SECRET = os.getenv(
 )
 
 
-# --------------------------------------------------
+# ============================================================
 # CELERY
-# --------------------------------------------------
+# ============================================================
 
 CELERY_BROKER_URL = os.getenv(
     "CELERY_BROKER_URL",
@@ -276,19 +268,19 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 
-# --------------------------------------------------
+# ============================================================
 # WEBSITE URL
-# --------------------------------------------------
+# ============================================================
 
 SITE_BASE_URL = os.getenv(
     "SITE_BASE_URL",
-    "http://127.0.0.1:8000",
+    "https://bookmyseat-lduz.onrender.com",
 )
 
 
-# --------------------------------------------------
+# ============================================================
 # DEFAULT PRIMARY KEY
-# --------------------------------------------------
+# ============================================================
 
 DEFAULT_AUTO_FIELD = (
     "django.db.models.BigAutoField"
