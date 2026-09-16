@@ -51,6 +51,7 @@ except ImportError:
 # ==========================================================
 
 def home(request):
+    movies = Movie.objects.all()
     events = Event.objects.all()
     premieres = Premiere.objects.all()
     music_studios = MusicStudio.objects.all()
@@ -59,6 +60,7 @@ def home(request):
         request,
         'users/home.html',
         {
+            'movies': movies,
             'events': events,
             'premieres': premieres,
             'music_studios': music_studios,
