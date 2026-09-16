@@ -1,0 +1,151 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7">
+
+            <div class="card shadow">
+
+                <div class="card-body text-center">
+
+                    {% if valid %}
+
+                        <div class="mb-3">
+
+                            <i
+                                class="fas fa-check-circle text-success"
+                                style="font-size:70px;"
+                            ></i>
+
+                        </div>
+
+                        <h2 class="text-success">
+                            Ticket Verified
+                        </h2>
+
+                        <p class="text-muted">
+                            {{ message }}
+                        </p>
+
+                        <hr>
+
+                        <div class="text-start">
+
+                            <p>
+                                <strong>Booking ID:</strong>
+                                {{ booking.id }}
+                            </p>
+
+                            <p>
+                                <strong>Movie:</strong>
+                                {{ booking.movie.name }}
+                            </p>
+
+                            <p>
+                                <strong>Theater:</strong>
+                                {{ booking.theater.name }}
+                            </p>
+
+                            <p>
+                                <strong>Seat:</strong>
+                                {{ booking.seat.seat_number }}
+                            </p>
+
+                            <p>
+                                <strong>Payment Status:</strong>
+
+                                <span class="badge bg-success">
+                                    Paid
+                                </span>
+                            </p>
+
+                            {% if payment.amount %}
+
+                            <p>
+                                <strong>Amount:</strong>
+                                ₹{{ payment.amount }}
+                            </p>
+
+                            {% endif %}
+
+                            {% if payment.stripey_payment_id %}
+
+                            <p>
+                                <strong>Payment ID:</strong>
+                                {{ payment.stripey_payment_id }}
+                            </p>
+
+                            {% elif payment.stripe_order_id %}
+
+                            <p>
+                                <strong>Payment ID:</strong>
+                                {{ payment.stripe_order_id }}
+                            </p>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="alert alert-success mt-4">
+
+                            <i class="fas fa-shield-alt me-2"></i>
+
+                            This is a valid BookMySeat ticket.
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="mb-3">
+
+                            <i
+                                class="fas fa-times-circle text-danger"
+                                style="font-size:70px;"
+                            ></i>
+
+                        </div>
+
+                        <h2 class="text-danger">
+                            Ticket Verification Failed
+                        </h2>
+
+                        <p class="text-muted">
+                            {{ message }}
+                        </p>
+
+                        {% if booking %}
+
+                        <hr>
+
+                        <p>
+                            <strong>Booking ID:</strong>
+                            {{ booking.id }}
+                        </p>
+
+                        {% endif %}
+
+                        <div class="alert alert-danger mt-4">
+
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+
+                            This ticket could not be verified.
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,1951 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Select Your Seats | BookMySeat</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* ================= PAGE BASE ================= */
+
+        html {
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #f5f5f5;
+
+            color: #222;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 62px;
+
+            background: #343a40;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 6%;
+
+            flex-shrink: 0;
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            text-decoration: none;
+
+            color: white;
+
+            font-size: 20px;
+        }
+
+
+        .logo {
+            width: 42px;
+            height: 42px;
+
+            object-fit: contain;
+
+            margin-right: 10px;
+        }
+
+
+        /* ================= PAGE ================= */
+
+        .page {
+            width: 100%;
+
+            flex: 1 0 auto;
+
+            min-height: calc(100vh - 62px);
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* ================= HEADING ================= */
+
+        .heading {
+            text-align: center;
+
+            padding-top: 25px;
+            padding-bottom: 20px;
+        }
+
+
+        .heading h1 {
+            font-size: 28px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .heading p {
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= SCREEN ================= */
+
+        .screen-section {
+            width: 100%;
+
+            padding: 0 30px 25px;
+        }
+
+
+        .screen {
+            width: 80%;
+
+            max-width: 700px;
+
+            margin: 0 auto;
+
+            text-align: center;
+        }
+
+
+        .screen-box {
+            height: 46px;
+
+            background: #c6c6c6;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        .screen-text {
+            margin-top: 10px;
+
+            color: #999;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= LEGEND ================= */
+
+        .legend {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            gap: 28px;
+
+            margin: 25px 0;
+
+            flex-wrap: wrap;
+        }
+
+
+        .legend-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            font-size: 13px;
+        }
+
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+
+            border-radius: 4px;
+
+            border: 2px solid #20a44a;
+
+            background: white;
+        }
+
+
+        .legend-selected {
+            background: #20a44a;
+
+            border-color: #20a44a;
+        }
+
+
+        .legend-reserved {
+            background: #f2b000;
+
+            border-color: #f2b000;
+        }
+
+
+        .legend-booked {
+            background: #d0d0d0;
+
+            border-color: #aaa;
+        }
+
+
+        /* ================= SEATS ================= */
+
+        .seat-container {
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding-bottom: 25px;
+        }
+
+
+        .seat-row {
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+        }
+
+
+        .row-label {
+            width: 25px;
+
+            text-align: right;
+
+            margin-right: 5px;
+
+            font-weight: bold;
+
+            color: #555;
+        }
+
+
+        .seat {
+            width: 38px;
+            height: 34px;
+
+            background: white;
+
+            border: 2px solid #20a44a;
+
+            color: #333;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+        }
+
+
+        .seat:hover {
+            background: #eaf8ee;
+        }
+
+
+        .seat.selected {
+            background: #20a44a;
+
+            color: white;
+
+            border-color: #20a44a;
+        }
+
+
+        .seat.my-reserved {
+            background: #20a44a;
+
+            color: white;
+
+            border-color: #20a44a;
+        }
+
+
+        .seat.reserved {
+            background: #f2b000;
+
+            color: white;
+
+            border-color: #f2b000;
+
+            cursor: not-allowed;
+        }
+
+
+        .seat.booked {
+            background: #d0d0d0;
+
+            color: #555;
+
+            border-color: #aaa;
+
+            cursor: not-allowed;
+        }
+
+
+        /* ================= BOTTOM PANEL ================= */
+
+        .bottom-panel {
+            background: white;
+
+            border-top: 1px solid #eee;
+
+            padding: 25px 20px 30px;
+
+            text-align: center;
+
+            margin-top: 5px;
+        }
+
+
+        .selected-info {
+            font-size: 15px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .timer {
+            font-size: 19px;
+
+            font-weight: bold;
+
+            color: #ff1744;
+
+            margin-bottom: 20px;
+        }
+
+
+        .reserve-btn,
+        .payment-btn {
+            display: inline-block;
+
+            border: none;
+
+            padding: 11px 24px;
+
+            border-radius: 5px;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            margin: 4px;
+
+            text-decoration: none;
+        }
+
+
+        .reserve-btn {
+            background: #20a44a;
+
+            color: white;
+        }
+
+
+        .reserve-btn:hover {
+            background: #188c3d;
+        }
+
+
+        .reserve-btn:disabled {
+            background: #aaa;
+
+            cursor: not-allowed;
+        }
+
+
+        /* ================= CONTINUE TO PAYMENT ================= */
+
+        .payment-btn {
+            background: #20a44a;
+
+            color: white;
+        }
+
+
+        .payment-btn:hover {
+            background: #188c3d;
+
+            color: white;
+        }
+
+
+        .message {
+            margin-top: 12px;
+
+            font-size: 13px;
+
+            color: #20a44a;
+        }
+
+
+        .error-message {
+            color: #e51937;
+        }
+
+
+        /* =====================================================
+           FOOTER
+           SAME POSITION AND SIZE
+           ONLY CONTENT/DESIGN CHANGED
+           ===================================================== */
+
+        .footer {
+            width: 100%;
+
+            background: #343a40;
+
+            color: #ffffff;
+
+            padding: 22px 0 14px;
+
+            margin-top: auto;
+
+            flex-shrink: 0;
+        }
+
+
+        .footer-container {
+            width: 80%;
+
+            max-width: 1200px;
+
+            margin: 0 auto;
+        }
+
+
+        /* ================= FOOTER COLUMNS ================= */
+
+        .footer-content {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            padding-bottom: 18px;
+        }
+
+
+        .footer-column {
+            width: 30%;
+        }
+
+
+        .footer-column h4 {
+            font-size: 15px;
+
+            font-weight: 500;
+
+            margin-bottom: 10px;
+
+            color: #ffffff;
+        }
+
+
+        .footer-column p {
+            font-size: 11px;
+
+            line-height: 1.6;
+
+            color: #ffffff;
+
+            margin: 0;
+        }
+
+
+        /* ================= QUICK LINKS ================= */
+
+        .footer-links {
+            list-style: none;
+
+            padding: 0;
+
+            margin: 0;
+        }
+
+
+        .footer-links li {
+            margin-bottom: 5px;
+        }
+
+
+        .footer-links a {
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 11px;
+        }
+
+
+        .footer-links a:hover {
+            color: #cccccc;
+        }
+
+
+        /* ================= SOCIAL ICONS ================= */
+
+        .social-icons {
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+        }
+
+
+        .social-icons a {
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+
+        .social-icons a:hover {
+            color: #cccccc;
+        }
+
+
+        /* ================= FOOTER LINE ================= */
+
+        .footer-line {
+            width: 100%;
+
+            height: 1px;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            margin-bottom: 10px;
+        }
+
+
+        /* ================= COPYRIGHT ================= */
+
+        .footer-copy {
+            text-align: center;
+
+            color: #ffffff;
+
+            font-size: 10px;
+
+            margin: 0;
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media (max-width: 768px) {
+
+            .seat-row {
+                gap: 5px;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+
+            .seat {
+                width: 34px;
+
+                height: 32px;
+
+                font-size: 10px;
+            }
+
+
+            .screen {
+                width: 90%;
+            }
+
+
+            .legend {
+                gap: 15px;
+            }
+
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+
+            .footer-content {
+                flex-direction: column;
+
+                gap: 20px;
+            }
+
+
+            .footer-column {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a
+            href="{% url 'home' %}"
+            class="brand"
+        >
+
+            <img
+                src="{% static 'images/logo.png' %}"
+                alt="BookMySeat"
+                class="logo"
+            >
+
+            <span>
+                BookMySeat
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <!-- ================= PAGE ================= -->
+
+    <main class="page">
+
+
+        <!-- ================= HEADING ================= -->
+
+        <div class="heading">
+
+            <h1>
+                Select Your Seats
+            </h1>
+
+
+            <p>
+
+                {{ theater.name }}
+
+                &nbsp; | &nbsp;
+
+                {{ theater.movie.name }}
+
+                &nbsp; | &nbsp;
+
+                {{ theater.time }}
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= SCREEN ================= -->
+
+        <div class="screen-section">
+
+            <div class="screen">
+
+                <div class="screen-box">
+                    All eyes this way please!
+                </div>
+
+
+                <div class="screen-text">
+                    SCREEN
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= LEGEND ================= -->
+
+        <div class="legend">
+
+
+            <div class="legend-item">
+
+                <div class="legend-box"></div>
+
+                Available
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div class="legend-box legend-selected"></div>
+
+                Selected
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div class="legend-box legend-reserved"></div>
+
+                Reserved
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div class="legend-box legend-booked"></div>
+
+                Booked
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= SEATS ================= -->
+
+        <div
+            class="seat-container"
+            id="seatContainer"
+        >
+
+
+            <!-- ================= ROW A ================= -->
+
+            <div class="seat-row">
+
+                <span class="row-label">
+                    A
+                </span>
+
+
+                {% for seat in seats %}
+
+                    {% if forloop.counter <= 14 %}
+
+
+                        {% if seat.is_booked %}
+
+                            <button
+                                type="button"
+                                class="seat booked"
+                                disabled
+                                data-seat-id="{{ seat.id }}"
+                                data-seat-number="{{ seat.seat_number }}"
+                            >
+                                {{ seat.seat_number }}
+                            </button>
+
+
+                        {% elif seat.id in user_reserved_seat_ids %}
+
+                            <button
+                                type="button"
+                                class="seat my-reserved"
+                                data-seat-id="{{ seat.id }}"
+                                data-seat-number="{{ seat.seat_number }}"
+                            >
+                                {{ seat.seat_number }}
+                            </button>
+
+
+                        {% elif seat.id in reserved_seat_ids %}
+
+                            <button
+                                type="button"
+                                class="seat reserved"
+                                disabled
+                                data-seat-id="{{ seat.id }}"
+                                data-seat-number="{{ seat.seat_number }}"
+                            >
+                                {{ seat.seat_number }}
+                            </button>
+
+
+                        {% else %}
+
+                            <button
+                                type="button"
+                                class="seat"
+                                data-seat-id="{{ seat.id }}"
+                                data-seat-number="{{ seat.seat_number }}"
+                            >
+                                {{ seat.seat_number }}
+                            </button>
+
+                        {% endif %}
+
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ================= ROW B ================= -->
+
+            <div class="seat-row">
+
+                <span class="row-label">
+                    B
+                </span>
+
+
+                {% for seat in seats %}
+
+                    {% if forloop.counter > 14 %}
+
+
+                        {% if seat.is_booked %}
+
+                            <button
+                                type="button"
+                                class="seat booked"
+                                disabled
+                                data-seat-id="{{ seat.id }}"
+                                data-seat-number="{{ seat.seat_number }}"
+                            >
+                                {{ seat.seat_number }}
+                            </button>
+
+
+                        {% elif seat.id in user_reserved_seat_ids %}
+
+                            <button
+                                type="button"
+                                class="seat my-reserved"
+                                data-seat-id="{{ seat.id }}"
+                                data-seat-number="{{ seat.seat_number }}"
+                            >
+                                {{ seat.seat_number }}
+                            </button>
+
+
+                        {% elif seat.id in reserved_seat_ids %}
+
+                            <button
+                                type="button"
+                                class="seat reserved"
+                                disabled
+                                data-seat-id="{{ seat.id }}"
+                                data-seat-number="{{ seat.seat_number }}"
+                            >
+                                {{ seat.seat_number }}
+                            </button>
+
+
+                        {% else %}
+
+                            <button
+                                type="button"
+                                class="seat"
+                                data-seat-id="{{ seat.id }}"
+                                data-seat-number="{{ seat.seat_number }}"
+                            >
+                                {{ seat.seat_number }}
+                            </button>
+
+                        {% endif %}
+
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= BOTTOM PANEL ================= -->
+
+        <div class="bottom-panel">
+
+
+            <div class="selected-info">
+
+                Selected Seats:
+
+                <strong id="selectedSeats">
+                    None
+                </strong>
+
+            </div>
+
+
+            <div
+                class="timer"
+                id="timer"
+                style="display:none;"
+            >
+
+                Reservation expires in:
+
+                <span id="countdown">
+                    02:00
+                </span>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="reserve-btn"
+                id="reserveButton"
+                disabled
+            >
+                Reserve Selected Seats
+            </button>
+
+
+            <a
+                href="{% url 'payment_page' theater.id %}"
+                class="payment-btn"
+                id="paymentButton"
+                style="display:none;"
+            >
+                Continue to Payment
+            </a>
+
+
+            <div
+                class="message"
+                id="message"
+            ></div>
+
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+
+            <!-- ================= FOOTER CONTENT ================= -->
+
+            <div class="footer-content">
+
+
+                <!-- ABOUT US -->
+
+                <div class="footer-column">
+
+                    <h4>
+                        About Us
+                    </h4>
+
+                    <p>
+                        We provide the best movie experience in town.
+                    </p>
+
+                    <p>
+                        Book your tickets now and enjoy the show!
+                    </p>
+
+                </div>
+
+
+                <!-- QUICK LINKS -->
+
+                <div class="footer-column">
+
+                    <h4>
+                        Quick Links
+                    </h4>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="{% url 'home' %}">
+                                Home
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'movie_list' %}">
+                                Movies
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'profile' %}">
+                                Book Tickets
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'home' %}">
+                                Contact
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- FOLLOW US -->
+
+                <div class="footer-column">
+
+                    <h4>
+                        Follow Us
+                    </h4>
+
+                    <div class="social-icons">
+
+                        <a href="#" aria-label="Facebook">
+                            f
+                        </a>
+
+                        <a href="#" aria-label="Twitter">
+                            ♥
+                        </a>
+
+                        <a href="#" aria-label="Instagram">
+                            ◎
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================= LINE ================= -->
+
+            <div class="footer-line"></div>
+
+
+            <!-- ================= COPYRIGHT ================= -->
+
+            <p class="footer-copy">
+
+                © 2024 Cinema Booking. All rights reserved.
+
+            </p>
+
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================= PAGE DATA ================= -->
+
+    <div
+        id="pageData"
+        data-theater-id="{{ theater.id }}"
+        data-remaining-seconds="{{ remaining_seconds|default:'0' }}"
+        data-csrf-token="{{ csrf_token }}"
+        style="display:none;"
+    ></div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* ================= PAGE DATA ================= */
+
+        const pageData =
+            document.getElementById('pageData');
+
+
+        const theaterId =
+            pageData.dataset.theaterId;
+
+
+        const csrfToken =
+            pageData.dataset.csrfToken;
+
+
+        let remainingSeconds =
+            parseInt(
+                pageData.dataset.remainingSeconds || '0',
+                10
+            );
+
+
+        /* ================= ELEMENTS ================= */
+
+        const reserveButton =
+            document.getElementById('reserveButton');
+
+
+        const paymentButton =
+            document.getElementById('paymentButton');
+
+
+        const selectedSeatsText =
+            document.getElementById('selectedSeats');
+
+
+        const message =
+            document.getElementById('message');
+
+
+        const timer =
+            document.getElementById('timer');
+
+
+        const countdown =
+            document.getElementById('countdown');
+
+
+        /* ================= STATE ================= */
+
+        let selectedSeats =
+            new Set();
+
+
+        let countdownInterval =
+            null;
+
+
+        /* ================= DISPLAY ================= */
+
+        function updateSelectedDisplay() {
+
+            const names = [];
+
+
+            document
+                .querySelectorAll(
+                    '.seat.selected, .seat.my-reserved'
+                )
+                .forEach(
+                    function(seat) {
+
+                        const seatNumber =
+                            seat.dataset.seatNumber;
+
+
+                        if (seatNumber) {
+
+                            names.push(
+                                seatNumber
+                            );
+
+                        }
+
+                    }
+                );
+
+
+            if (names.length === 0) {
+
+                selectedSeatsText.textContent =
+                    'None';
+
+            }
+
+            else {
+
+                selectedSeatsText.textContent =
+                    names.join(', ');
+
+            }
+
+        }
+
+
+        /* ================= TIMER ================= */
+
+        function updateTimer() {
+
+            if (remainingSeconds <= 0) {
+
+                timer.style.display =
+                    'none';
+
+
+                paymentButton.style.display =
+                    'none';
+
+
+                return;
+
+            }
+
+
+            timer.style.display =
+                'block';
+
+
+            const minutes =
+                Math.floor(
+                    remainingSeconds / 60
+                );
+
+
+            const seconds =
+                remainingSeconds % 60;
+
+
+            countdown.textContent =
+                String(minutes).padStart(2, '0')
+                +
+                ':'
+                +
+                String(seconds).padStart(2, '0');
+
+        }
+
+
+        function startCountdown() {
+
+            if (countdownInterval !== null) {
+
+                clearInterval(
+                    countdownInterval
+                );
+
+            }
+
+
+            updateTimer();
+
+
+            countdownInterval =
+                setInterval(
+                    function() {
+
+                        remainingSeconds--;
+
+
+                        updateTimer();
+
+
+                        if (
+                            remainingSeconds <= 0
+                        ) {
+
+                            clearInterval(
+                                countdownInterval
+                            );
+
+
+                            countdownInterval =
+                                null;
+
+
+                            selectedSeats.clear();
+
+
+                            window.location.reload();
+
+                        }
+
+                    },
+                    1000
+                );
+
+        }
+
+
+        /* ================= SEAT CLICK ================= */
+
+        document
+            .querySelectorAll('.seat')
+            .forEach(
+                function(seat) {
+
+                    seat.addEventListener(
+                        'click',
+                        function() {
+
+                            if (seat.disabled) {
+
+                                return;
+
+                            }
+
+
+                            const id =
+                                String(
+                                    seat.dataset.seatId
+                                );
+
+
+                            /*
+                             * MY RESERVED SEAT
+                             */
+
+                            if (
+                                seat.classList.contains(
+                                    'my-reserved'
+                                )
+                            ) {
+
+                                seat.classList.remove(
+                                    'my-reserved'
+                                );
+
+
+                                seat.classList.add(
+                                    'selected'
+                                );
+
+
+                                selectedSeats.add(
+                                    id
+                                );
+
+                            }
+
+
+                            /*
+                             * SELECTED SEAT
+                             */
+
+                            else if (
+                                seat.classList.contains(
+                                    'selected'
+                                )
+                            ) {
+
+                                seat.classList.remove(
+                                    'selected'
+                                );
+
+
+                                selectedSeats.delete(
+                                    id
+                                );
+
+                            }
+
+
+                            /*
+                             * AVAILABLE SEAT
+                             */
+
+                            else if (
+                                !seat.classList.contains(
+                                    'reserved'
+                                )
+                                &&
+                                !seat.classList.contains(
+                                    'booked'
+                                )
+                            ) {
+
+                                seat.classList.add(
+                                    'selected'
+                                );
+
+
+                                selectedSeats.add(
+                                    id
+                                );
+
+                            }
+
+
+                            reserveButton.disabled =
+                                selectedSeats.size === 0;
+
+
+                            updateSelectedDisplay();
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* ================= RESERVE ================= */
+
+        reserveButton.addEventListener(
+            'click',
+            function() {
+
+                if (
+                    selectedSeats.size === 0
+                ) {
+
+                    return;
+
+                }
+
+
+                reserveButton.disabled =
+                    true;
+
+
+                message.classList.remove(
+                    'error-message'
+                );
+
+
+                message.textContent =
+                    'Reserving seats...';
+
+
+                const formData =
+                    new FormData();
+
+
+                selectedSeats.forEach(
+                    function(id) {
+
+                        formData.append(
+                            'seat_ids',
+                            id
+                        );
+
+                    }
+                );
+
+
+                fetch(
+                    "{% url 'reserve_seats' theater.id %}",
+                    {
+                        method: 'POST',
+
+                        headers: {
+                            'X-CSRFToken':
+                                csrfToken
+                        },
+
+                        body: formData
+                    }
+                )
+                .then(
+                    function(response) {
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                'Reservation request failed.'
+                            );
+
+                        }
+
+
+                        return response.json();
+
+                    }
+                )
+                .then(
+                    function(data) {
+
+                        if (data.success) {
+
+
+                            selectedSeats =
+                                new Set(
+                                    data.seat_ids.map(
+                                        String
+                                    )
+                                );
+
+
+                            remainingSeconds =
+                                Number(
+                                    data.remaining_seconds || 0
+                                );
+
+
+                            message.classList.remove(
+                                'error-message'
+                            );
+
+
+                            message.textContent =
+                                'Seats reserved successfully for 2 minutes.';
+
+
+                            data.seat_ids.forEach(
+                                function(id) {
+
+                                    const seat =
+                                        document.querySelector(
+                                            '[data-seat-id="' +
+                                            id +
+                                            '"]'
+                                        );
+
+
+                                    if (seat) {
+
+                                        seat.classList.remove(
+                                            'selected'
+                                        );
+
+
+                                        seat.classList.remove(
+                                            'reserved'
+                                        );
+
+
+                                        seat.classList.remove(
+                                            'booked'
+                                        );
+
+
+                                        seat.classList.add(
+                                            'my-reserved'
+                                        );
+
+
+                                        seat.disabled =
+                                            false;
+
+                                    }
+
+                                }
+                            );
+
+
+                            reserveButton.disabled =
+                                true;
+
+
+                            paymentButton.style.display =
+                                'inline-block';
+
+
+                            updateSelectedDisplay();
+
+
+                            startCountdown();
+
+
+                            loadSeatStatus(true);
+
+                        }
+
+                        else {
+
+                            message.classList.add(
+                                'error-message'
+                            );
+
+
+                            message.textContent =
+                                data.message ||
+                                'One or more selected seats are no longer available.';
+
+
+                            reserveButton.disabled =
+                                selectedSeats.size === 0;
+
+
+                            loadSeatStatus(false);
+
+                        }
+
+                    }
+                )
+                .catch(
+                    function(error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        message.classList.add(
+                            'error-message'
+                        );
+
+
+                        message.textContent =
+                            'Something went wrong. Please try again.';
+
+
+                        reserveButton.disabled =
+                            selectedSeats.size === 0;
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* ================= LIVE SEAT STATUS ================= */
+
+        function loadSeatStatus(
+            preserveSelection = true
+        ) {
+
+            fetch(
+                "{% url 'seat_status' theater.id %}"
+            )
+            .then(
+                function(response) {
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            'Seat status request failed.'
+                        );
+
+                    }
+
+
+                    return response.json();
+
+                }
+            )
+            .then(
+                function(data) {
+
+                    if (!data.success) {
+
+                        return;
+
+                    }
+
+
+                    remainingSeconds =
+                        Number(
+                            data.remaining_seconds || 0
+                        );
+
+
+                    data.seats.forEach(
+                        function(item) {
+
+                            const seat =
+                                document.querySelector(
+                                    '[data-seat-id="' +
+                                    item.id +
+                                    '"]'
+                                );
+
+
+                            if (!seat) {
+
+                                return;
+
+                            }
+
+
+                            const id =
+                                String(
+                                    item.id
+                                );
+
+
+                            /*
+                             * A seat currently selected
+                             * by this browser.
+                             */
+
+                            if (
+                                preserveSelection &&
+                                selectedSeats.has(id)
+                            ) {
+
+
+                                /*
+                                 * Someone else booked
+                                 * or reserved it.
+                                 */
+
+                                if (
+                                    item.status === 'booked'
+                                    ||
+                                    item.status === 'reserved'
+                                ) {
+
+                                    selectedSeats.delete(
+                                        id
+                                    );
+
+
+                                    seat.classList.remove(
+                                        'selected'
+                                    );
+
+
+                                    seat.classList.remove(
+                                        'my-reserved'
+                                    );
+
+
+                                    if (
+                                        item.status === 'booked'
+                                    ) {
+
+                                        seat.classList.add(
+                                            'booked'
+                                        );
+
+                                    }
+
+                                    else {
+
+                                        seat.classList.add(
+                                            'reserved'
+                                        );
+
+                                    }
+
+
+                                    seat.disabled =
+                                        true;
+
+
+                                    return;
+
+                                }
+
+
+                                /*
+                                 * Still available for
+                                 * the current selection.
+                                 */
+
+                                seat.classList.remove(
+                                    'reserved'
+                                );
+
+
+                                seat.classList.remove(
+                                    'booked'
+                                );
+
+
+                                seat.classList.remove(
+                                    'my-reserved'
+                                );
+
+
+                                seat.classList.add(
+                                    'selected'
+                                );
+
+
+                                seat.disabled =
+                                    false;
+
+
+                                return;
+
+                            }
+
+
+                            /*
+                             * Seats not selected locally
+                             * can be updated normally.
+                             */
+
+                            seat.classList.remove(
+                                'selected'
+                            );
+
+
+                            seat.classList.remove(
+                                'reserved'
+                            );
+
+
+                            seat.classList.remove(
+                                'booked'
+                            );
+
+
+                            seat.classList.remove(
+                                'my-reserved'
+                            );
+
+
+                            seat.disabled =
+                                false;
+
+
+                            if (
+                                item.status === 'booked'
+                            ) {
+
+                                seat.classList.add(
+                                    'booked'
+                                );
+
+
+                                seat.disabled =
+                                    true;
+
+                            }
+
+                            else if (
+                                item.status === 'reserved'
+                            ) {
+
+                                seat.classList.add(
+                                    'reserved'
+                                );
+
+
+                                seat.disabled =
+                                    true;
+
+                            }
+
+                            else if (
+                                item.status === 'my_reserved'
+                            ) {
+
+                                seat.classList.add(
+                                    'my-reserved'
+                                );
+
+                            }
+
+                        }
+                    );
+
+
+                    reserveButton.disabled =
+                        selectedSeats.size === 0;
+
+
+                    updateSelectedDisplay();
+
+
+                    updateTimer();
+
+
+                    if (
+                        remainingSeconds > 0
+                    ) {
+
+                        paymentButton.style.display =
+                            'inline-block';
+
+                    }
+
+                    else {
+
+                        paymentButton.style.display =
+                            'none';
+
+                    }
+
+                }
+            )
+            .catch(
+                function(error) {
+
+                    console.error(
+                        'Seat status error:',
+                        error
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* ================= START ================= */
+
+        updateSelectedDisplay();
+
+
+        if (
+            remainingSeconds > 0
+        ) {
+
+            paymentButton.style.display =
+                'inline-block';
+
+
+            startCountdown();
+
+        }
+
+
+        /* ================= LIVE REFRESH ================= */
+
+        setInterval(
+            function() {
+
+                loadSeatStatus(true);
+
+            },
+            5000
+        );
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .theater-container {
+        width: 720px;
+        margin: 35px auto;
+    }
+
+    .movie-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
+
+    .theatre-info {
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        margin-bottom: 20px;
+    }
+
+    .theatre-info strong {
+        font-size: 15px;
+    }
+
+    .info-icons {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 12px;
+        font-size: 14px;
+        flex-wrap: wrap;
+    }
+
+    .info-icons i {
+        margin-right: 4px;
+    }
+
+    .show-times {
+        width: 100%;
+        margin-top: 18px;
+    }
+
+    .time-box {
+        background: #28a745;
+        color: white;
+        border-radius: 4px;
+        text-align: center;
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .time-box a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .time-box span {
+        display: block;
+        color: white;
+        font-size: 12px;
+        margin-top: 3px;
+    }
+
+    .non-cancellable {
+        color: #ffc107;
+        font-size: 12px;
+        margin-top: 35px;
+    }
+
+    .non-cancellable i {
+        margin-right: 5px;
+    }
+
+    @media (max-width: 768px) {
+        .theater-container {
+            width: 90%;
+        }
+
+        .info-icons {
+            gap: 8px;
+        }
+    }
+</style>
+
+<div class="theater-container">
+
+    <div class="movie-title">
+        Movie - {{ movie.name }}
+    </div>
+
+    {% if theaters %}
+
+        {% for theater in theaters %}
+
+            <div class="theatre-info">
+
+                <strong>{{ theater.name }} Theater</strong>
+
+                <div class="info-icons">
+
+                    <span>
+                        <i class="fas fa-mobile-alt text-success"></i>
+                        M-Ticket
+                    </span>
+
+                    <span>
+                        <i class="fas fa-utensils text-warning"></i>
+                        Food & Beverage
+                    </span>
+
+                    <span>
+                        <i class="fas fa-parking text-primary"></i>
+                        Parking Available
+                    </span>
+
+                    <span>
+                        <i class="fas fa-wheelchair text-info"></i>
+                        Wheelchair Access
+                    </span>
+
+                    <span>
+                        <i class="fas fa-glasses text-danger"></i>
+                        3D Show Available
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="show-times">
+
+                <div class="time-box">
+
+                    {{ theater.time }}
+
+                    <a href="{% url 'seat_selection' theater.id %}">
+                        <span>Book Now</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="text-center">
+            <p>Sorry, no theaters are available for this movie at the moment.</p>
+        </div>
+
+    {% endif %}
+
+    <div class="non-cancellable">
+        <i class="fas fa-circle"></i>
+        Non-cancellable
+    </div>
+
+</div>
+
+{% endblock %}

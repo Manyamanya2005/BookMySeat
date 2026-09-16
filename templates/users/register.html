@@ -1,0 +1,213 @@
+{% extends "basic.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+<style>
+    .register-card {
+        width: 600px;
+        margin: 30px auto;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+    }
+
+    .register-card .card-header {
+        background: #087ff5;
+        color: white;
+        font-size: 18px;
+        padding: 9px 14px;
+    }
+
+    .register-body {
+        padding: 15px;
+    }
+
+    .register-body label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    /* SMALL INPUT BOXES */
+    .register-body .input-group {
+        width: 210px;
+        margin-bottom: 6px;
+    }
+
+    .register-body .input-group-text {
+        width: 40px;
+        justify-content: center;
+        padding: 5px;
+    }
+
+    .register-body .form-control {
+        width: 170px;
+        flex: 0 0 170px;
+        height: 30px;
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    .register-body ul {
+        font-size: 11px;
+        margin: 5px 0 15px 15px;
+        padding-left: 10px;
+    }
+
+    .register-body .helptext {
+        font-size: 11px;
+    }
+
+    /* SMALL REGISTER BUTTON */
+    .register-btn {
+        background: #087ff5;
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        font-size: 13px;
+        border-radius: 4px;
+        width: 120px;
+    }
+
+    .register-footer {
+        background: #f5f5f5;
+        border-top: 1px solid #ddd;
+        text-align: center;
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .register-footer a {
+        color: #087ff5;
+        text-decoration: none;
+    }
+
+    .errorlist {
+        color: #dc3545;
+        font-size: 11px;
+        margin: 3px 0;
+        padding-left: 15px;
+    }
+</style>
+
+<div class="card register-card">
+
+    <!-- HEADER -->
+    <div class="card-header">
+        <i class="fas fa-user-plus"></i>
+        &nbsp;Register
+    </div>
+
+    <!-- FORM -->
+    <div class="register-body">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- USERNAME -->
+            <label for="{{ form.username.id_for_label }}">
+                Username <span class="text-danger">*</span>
+            </label>
+
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-user"></i>
+                </span>
+                {{ form.username }}
+            </div>
+
+            {% if form.username.errors %}
+                {{ form.username.errors }}
+            {% endif %}
+
+            {% if form.username.help_text %}
+                <div class="helptext">
+                    {{ form.username.help_text }}
+                </div>
+            {% endif %}
+
+
+            <!-- EMAIL -->
+            <label for="{{ form.email.id_for_label }}" style="margin-top:12px;">
+                Email <span class="text-danger">*</span>
+            </label>
+
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                {{ form.email }}
+            </div>
+
+            {% if form.email.errors %}
+                {{ form.email.errors }}
+            {% endif %}
+
+
+            <!-- PASSWORD -->
+            <label for="{{ form.password1.id_for_label }}" style="margin-top:12px;">
+                Password
+            </label>
+
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+                {{ form.password1 }}
+            </div>
+
+            {% if form.password1.errors %}
+                {{ form.password1.errors }}
+            {% endif %}
+
+            {% if form.password1.help_text %}
+                <div class="helptext">
+                    {{ form.password1.help_text|safe }}
+                </div>
+            {% endif %}
+
+
+            <!-- CONFIRM PASSWORD -->
+            <label for="{{ form.password2.id_for_label }}" style="margin-top:12px;">
+                Password confirmation
+            </label>
+
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-lock"></i>
+                </span>
+                {{ form.password2 }}
+            </div>
+
+            {% if form.password2.errors %}
+                {{ form.password2.errors }}
+            {% endif %}
+
+            {% if form.password2.help_text %}
+                <div class="helptext">
+                    {{ form.password2.help_text|safe }}
+                </div>
+            {% endif %}
+
+
+            <!-- REGISTER BUTTON -->
+            <button type="submit" class="register-btn" style="margin-top:10px;">
+                <i class="fas fa-user-plus"></i>
+                &nbsp;Register
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="register-footer">
+        Already have an account?
+        <a href="{% url 'login' %}">Log In</a>
+    </div>
+
+</div>
+
+{% endblock %}

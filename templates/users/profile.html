@@ -1,0 +1,658 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row">
+
+        <!-- PROFILE CARD -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow text-center">
+
+                <div class="card-body">
+
+                    <div
+                        class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
+                        style="width:100px;height:100px;font-size:50px;"
+                    >
+
+                        <i class="fas fa-user"></i>
+
+                    </div>
+
+                    <h3>
+                        {{ user.username }}
+                    </h3>
+
+                    <p class="text-muted">
+                        {{ user.email }}
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-1">
+
+                        <a
+                            href="#update-profile"
+                            class="btn btn-outline-primary"
+                        >
+
+                            <i class="fas fa-envelope"></i>
+
+                            Message
+
+                        </a>
+
+                        <a
+                            href="{% url 'reset_password' %}"
+                            class="btn btn-outline-secondary"
+                        >
+
+                            <i class="fas fa-key"></i>
+
+                            Reset Password
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE UPDATE + BOOKINGS -->
+
+        <div class="col-md-8">
+
+            <!-- UPDATE PROFILE -->
+
+            <div
+                class="card shadow mb-4"
+                id="update-profile"
+            >
+
+                <div class="card-header bg-primary text-white">
+
+                    <h4 class="mb-0">
+
+                        <i class="fas fa-user-edit me-2"></i>
+
+                        Update Profile
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ u_form.username.id_for_label }}"
+                                class="form-label"
+                            >
+
+                                <i class="fas fa-user me-1"></i>
+
+                                Username:
+
+                            </label>
+
+                            {{ u_form.username }}
+
+                            {% if u_form.username.errors %}
+
+                                <div class="text-danger">
+
+                                    {{ u_form.username.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ u_form.email.id_for_label }}"
+                                class="form-label"
+                            >
+
+                                <i class="fas fa-envelope me-1"></i>
+
+                                Email address:
+
+                            </label>
+
+                            {{ u_form.email }}
+
+                            {% if u_form.email.errors %}
+
+                                <div class="text-danger">
+
+                                    {{ u_form.email.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="d-grid">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+
+                                <i class="fas fa-save me-2"></i>
+
+                                Update Profile
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- BOOKINGS -->
+
+            <div class="card shadow mb-4">
+
+                <div class="card-header bg-success text-white">
+
+                    <h4 class="mb-0">
+
+                        <i class="fas fa-ticket-alt me-2"></i>
+
+                        Your Bookings
+
+                    </h4>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    {% if bookings %}
+
+                        <div class="row">
+
+                            {% for booking in bookings %}
+
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="border rounded p-3 h-100">
+
+                                        <h5>
+                                            {{ booking.movie.name }}
+                                        </h5>
+
+
+                                        <p class="mb-1">
+
+                                            <i class="fas fa-film"></i>
+
+                                            {{ booking.theater.name }}
+
+                                        </p>
+
+
+                                        <p class="mb-1">
+
+                                            <i class="fas fa-chair"></i>
+
+                                            Seat:
+
+                                            {{ booking.seat.seat_number }}
+
+                                        </p>
+
+
+                                        <p class="mb-2">
+
+                                            <i class="far fa-clock"></i>
+
+                                            {{ booking.booked_at|date:"F d, Y H:i" }}
+
+                                        </p>
+
+
+                                        <!-- PAYMENT DETAILS -->
+
+                                        {% if booking.payment %}
+
+                                            <hr>
+
+                                            <h6 class="text-primary">
+
+                                                <i class="fas fa-credit-card me-1"></i>
+
+                                                Payment Details
+
+                                            </h6>
+
+
+                                            <p class="mb-1">
+
+                                                <strong>Amount:</strong>
+
+                                                ₹{{ booking.payment.amount }}
+
+                                            </p>
+
+
+                                            <p class="mb-1">
+
+                                                <strong>Status:</strong>
+
+                                                {% if booking.payment.status == "paid" %}
+
+                                                    <span class="badge bg-success">
+
+                                                        <i class="fas fa-check-circle"></i>
+
+                                                        Paid
+
+                                                    </span>
+
+                                                {% elif booking.payment.status == "failed" %}
+
+                                                    <span class="badge bg-danger">
+
+                                                        <i class="fas fa-times-circle"></i>
+
+                                                        Failed
+
+                                                    </span>
+
+                                                {% elif booking.payment.status == "cancelled" %}
+
+                                                    <span class="badge bg-warning text-dark">
+
+                                                        <i class="fas fa-ban"></i>
+
+                                                        Cancelled
+
+                                                    </span>
+
+                                                {% elif booking.payment.status == "pending" %}
+
+                                                    <span class="badge bg-secondary">
+
+                                                        <i class="fas fa-clock"></i>
+
+                                                        Pending
+
+                                                    </span>
+
+                                                {% else %}
+
+                                                    <span class="badge bg-secondary">
+
+                                                        {{ booking.payment.status|title }}
+
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </p>
+
+
+                                            <p class="mb-1">
+
+                                                <strong>Transaction ID:</strong>
+
+                                                <small class="text-muted">
+
+                                                    {{ booking.payment.stripey_payment_id|default:booking.payment.stripe_order_id }}
+
+                                                </small>
+
+                                            </p>
+
+
+                                            <p class="mb-2">
+
+                                                <strong>Payment Date:</strong>
+
+                                                {{ booking.payment.updated_at|date:"F d, Y H:i" }}
+
+                                            </p>
+
+                                        {% endif %}
+
+
+                                        <!-- TASK 6 - DOWNLOAD TICKET -->
+
+                                        {% if booking.payment and booking.payment.status == "paid" %}
+
+                                            <div class="mb-3">
+
+                                                <a
+                                                    href="{% url 'download_ticket' booking.id %}"
+                                                    class="btn btn-primary btn-sm w-100"
+                                                >
+
+                                                    <i class="fas fa-download me-1"></i>
+
+                                                    Download Ticket
+
+                                                </a>
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        <!-- WATCH STATUS -->
+
+                                        {% if booking.watched %}
+
+                                            <span class="badge bg-success">
+
+                                                <i class="fas fa-check-circle"></i>
+
+                                                Watched
+
+                                            </span>
+
+                                        {% else %}
+
+                                            <form
+                                                method="POST"
+                                                action="{% url 'mark_watched' booking.id %}"
+                                            >
+
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-sm btn-success"
+                                                >
+
+                                                    <i class="fas fa-check"></i>
+
+                                                    Mark as Watched
+
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="text-center py-4">
+
+                            <i
+                                class="fas fa-ticket-alt text-muted"
+                                style="font-size:45px;"
+                            ></i>
+
+                            <p class="mt-3 text-muted">
+
+                                You don't have any bookings yet.
+
+                            </p>
+
+                            <a
+                                href="{% url 'movie_list' %}"
+                                class="btn btn-primary"
+                            >
+
+                                Browse Movies
+
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT HISTORY -->
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h4 class="mb-0">
+
+                        <i class="fas fa-history me-2"></i>
+
+                        Payment History
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered table-hover">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Movie / Theater</th>
+
+                                    <th>Amount</th>
+
+                                    <th>Status</th>
+
+                                    <th>Transaction ID</th>
+
+                                    <th>Date</th>
+
+                                    <th>Action</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for payment in user.payments.all %}
+
+                                    <tr>
+
+                                        <td>
+
+                                            {{ payment.theater.movie.name }}
+
+                                            <br>
+
+                                            <small class="text-muted">
+
+                                                {{ payment.theater.name }}
+
+                                            </small>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            ₹{{ payment.amount }}
+
+                                        </td>
+
+
+                                        <td>
+
+                                            {% if payment.status == "paid" %}
+
+                                                <span class="badge bg-success">
+
+                                                    <i class="fas fa-check-circle"></i>
+
+                                                    Paid
+
+                                                </span>
+
+                                            {% elif payment.status == "failed" %}
+
+                                                <span class="badge bg-danger">
+
+                                                    <i class="fas fa-times-circle"></i>
+
+                                                    Failed
+
+                                                </span>
+
+                                            {% elif payment.status == "cancelled" %}
+
+                                                <span class="badge bg-warning text-dark">
+
+                                                    <i class="fas fa-ban"></i>
+
+                                                    Cancelled
+
+                                                </span>
+
+                                            {% elif payment.status == "pending" %}
+
+                                                <span class="badge bg-secondary">
+
+                                                    <i class="fas fa-clock"></i>
+
+                                                    Pending
+
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="badge bg-secondary">
+
+                                                    {{ payment.status|title }}
+
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <small>
+
+                                                {{ payment.stripey_payment_id|default:payment.stripe_order_id }}
+
+                                            </small>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            {{ payment.updated_at|date:"F d, Y H:i" }}
+
+                                        </td>
+
+
+                                        <!-- RETRY PAYMENT -->
+
+                                        <td>
+
+                                            {% if payment.status == "failed" or payment.status == "cancelled" %}
+
+                                                <a
+                                                    href="{% url 'retry_payment' payment.id %}"
+                                                    class="btn btn-sm btn-primary"
+                                                >
+
+                                                    <i class="fas fa-redo me-1"></i>
+
+                                                    Retry Payment
+
+                                                </a>
+
+                                            {% elif payment.status == "paid" %}
+
+                                                <span class="text-success">
+
+                                                    <i class="fas fa-check"></i>
+
+                                                    Completed
+
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="text-muted">
+
+                                                    —
+
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+                                    </tr>
+
+                                {% empty %}
+
+                                    <tr>
+
+                                        <td
+                                            colspan="6"
+                                            class="text-center text-muted"
+                                        >
+
+                                            No payment history available.
+
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

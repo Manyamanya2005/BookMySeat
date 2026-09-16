@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookMySeat Admin Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f4f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1f2937;
+            font-size: 12px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #d8dee6;
+            border-radius: 7px;
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        h2 {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+
+        .subtitle {
+            margin-top: 3px;
+            color: #6b7280;
+            font-size: 10px;
+        }
+
+        .logout {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 7px 12px;
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+            flex-wrap: wrap;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-weight: bold;
+        }
+
+        .field input {
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 7px;
+            font-size: 11px;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 4px;
+            padding: 8px 13px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-success {
+            background: #16a34a;
+            color: white;
+        }
+
+        .info {
+            background: #eff6ff;
+            border: 1px solid #60a5fa;
+            padding: 8px;
+            margin-bottom: 10px;
+            color: #1d4ed8;
+            font-size: 11px;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .metric {
+            background: white;
+            border: 1px solid #d8dee6;
+            border-radius: 6px;
+            padding: 10px;
+            min-height: 65px;
+        }
+
+        .metric-title {
+            color: #64748b;
+            font-size: 9px;
+        }
+
+        .metric-value {
+            margin-top: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .metric-note {
+            margin-top: 2px;
+            font-size: 8px;
+            color: #94a3b8;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            max-height: 330px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 7px 6px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .occupancy {
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            color: #64748b;
+            padding: 15px;
+        }
+
+        @media (max-width: 1100px) {
+            .metrics {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="card">
+
+        <h1>BookMySeat Admin Dashboard</h1>
+
+        <div class="subtitle">
+            Real-time business analytics, revenue and booking performance
+        </div>
+
+        <a href="{% url 'logout' %}" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- FILTER -->
+    <div class="card">
+
+        <h2>Filter Dashboard</h2>
+
+        <form method="get" class="filters">
+
+            <label class="field">
+                Start Date
+                <input
+                    type="date"
+                    name="start_date"
+                    value="{{ start_date }}"
+                >
+            </label>
+
+            <label class="field">
+                End Date
+                <input
+                    type="date"
+                    name="end_date"
+                    value="{{ end_date }}"
+                >
+            </label>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Apply Filter
+            </button>
+
+            <a
+                href="{% url 'admin_dashboard_export' %}?start_date={{ start_date }}&end_date={{ end_date }}"
+                class="btn btn-success"
+            >
+                Export CSV
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- DATE INFORMATION -->
+    <div class="info">
+
+        Showing booking records from
+        <strong>{{ start_date }}</strong>
+        to
+        <strong>{{ end_date }}</strong>
+
+        &nbsp; | &nbsp;
+
+        Total bookings:
+        <strong>{{ total_bookings }}</strong>
+
+    </div>
+
+
+    <!-- METRICS -->
+    <div class="metrics">
+
+        <div class="metric">
+            <div class="metric-title">
+                Today's Revenue
+            </div>
+
+            <div class="metric-value">
+                ₹{{ daily_revenue|default:"0.00" }}
+            </div>
+
+            <div class="metric-note">
+                Current day
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-title">
+                This Week
+            </div>
+
+            <div class="metric-value">
+                ₹{{ weekly_revenue|default:"0.00" }}
+            </div>
+
+            <div class="metric-note">
+                Current week
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-title">
+                This Month
+            </div>
+
+            <div class="metric-value">
+                ₹{{ monthly_revenue|default:"0.00" }}
+            </div>
+
+            <div class="metric-note">
+                Current month
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-title">
+                This Year
+            </div>
+
+            <div class="metric-value">
+                ₹{{ yearly_revenue|default:"0.00" }}
+            </div>
+
+            <div class="metric-note">
+                Current year
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-title">
+                Selected Period Revenue
+            </div>
+
+            <div class="metric-value">
+                ₹{{ revenue_range|default:"0.00" }}
+            </div>
+
+            <div class="metric-note">
+                Selected date range
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-title">
+                Total Bookings
+            </div>
+
+            <div class="metric-value">
+                {{ total_bookings|default:"0" }}
+            </div>
+
+            <div class="metric-note">
+                Selected date range
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-title">
+                Paid Transactions
+            </div>
+
+            <div class="metric-value">
+                {{ total_paid_transactions|default:"0" }}
+            </div>
+
+            <div class="metric-note">
+                Successful payments
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-title">
+                Total Users
+            </div>
+
+            <div class="metric-value">
+                {{ total_users|default:"0" }}
+            </div>
+
+            <div class="metric-note">
+                Registered users
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-title">
+                Cancellations
+            </div>
+
+            <div class="metric-value">
+                {{ cancellation_count|default:"0" }}
+            </div>
+
+            <div class="metric-note">
+                ₹{{ cancellation_amount|default:"0.00" }}
+            </div>
+        </div>
+
+
+        <div class="metric">
+            <div class="metric-title">
+                Refunds
+            </div>
+
+            <div class="metric-value">
+                {{ refund_count|default:"0" }}
+            </div>
+
+            <div class="metric-note">
+                ₹{{ refund_amount|default:"0.00" }}
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- BOOKING TRENDS + USER GROWTH -->
+    <div class="two-column">
+
+        <div class="card">
+
+            <h2>Booking Trends</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Bookings</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for row in booking_trends %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+
+                            <td>
+                                {{ row.day|date:"d-m-Y" }}
+                            </td>
+
+                            <td>
+                                {{ row.bookings }}
+                            </td>
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+                            <td colspan="3" class="empty">
+                                No bookings
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>User Growth</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>New Users</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for row in user_growth %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+
+                            <td>
+                                {{ row.day|date:"d-m-Y" }}
+                            </td>
+
+                            <td>
+                                {{ row.users }}
+                            </td>
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+                            <td colspan="3" class="empty">
+                                No new users
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- THEATER OCCUPANCY -->
+    <div class="card">
+
+        <h2>Theater Occupancy</h2>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Theater</th>
+                        <th>Location</th>
+                        <th>Movie</th>
+                        <th>Show Date</th>
+                        <th>Show Time</th>
+                        <th>Total Seats</th>
+                        <th>Booked Seats</th>
+                        <th>Occupancy %</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for row in theater_occupancy %}
+
+                    <tr>
+
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+
+                        <td>
+                            {{ row.name }}
+                        </td>
+
+                        <td>
+                            {{ row.location }}
+                        </td>
+
+                        <td>
+                            {{ row.movie }}
+                        </td>
+
+                        <td>
+                            {{ row.show_date|date:"d-m-Y" }}
+                        </td>
+
+                        <td>
+                            {{ row.show_time }}
+                        </td>
+
+                        <td>
+                            {{ row.total_seats }}
+                        </td>
+
+                        <td>
+                            {{ row.booked_seats }}
+                        </td>
+
+                        <td class="occupancy">
+                            {{ row.occupancy_percentage }}%
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+                        <td colspan="9" class="empty">
+                            No theaters found
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- MOVIES + TOP THEATERS -->
+    <div class="two-column">
+
+        <div class="card">
+
+            <h2>Most Booked Movies</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Movie</th>
+                            <th>Bookings</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for row in most_booked_movies %}
+
+                        <tr>
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+                            <td>
+                                {{ row.movie__name }}
+                            </td>
+
+                            <td>
+                                {{ row.bookings }}
+                            </td>
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+                            <td colspan="3" class="empty">
+                                No data
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Top Performing Theaters</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Theater</th>
+                            <th>Location</th>
+                            <th>Revenue</th>
+                            <th>Bookings</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for row in top_theaters %}
+
+                        <tr>
+
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+                            <td>
+                                {{ row.theater__name }}
+                            </td>
+
+                            <td>
+                                {{ row.theater__location }}
+                            </td>
+
+                            <td>
+                                ₹{{ row.revenue }}
+                            </td>
+
+                            <td>
+                                {{ row.bookings }}
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+                            <td colspan="5" class="empty">
+                                No data
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PEAK HOURS + PAYMENT STATS -->
+    <div class="two-column">
+
+        <div class="card">
+
+            <h2>Peak Booking Hours</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Hour</th>
+                            <th>Bookings</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for row in peak_booking_hours %}
+
+                        <tr>
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+                            <td>
+                                {{ row.hour }}:00
+                            </td>
+
+                            <td>
+                                {{ row.bookings }}
+                            </td>
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+                            <td colspan="3" class="empty">
+                                No data
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Payment Statistics</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Count</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for row in payment_statistics %}
+
+                        <tr>
+                            <td>
+                                {{ row.status }}
+                            </td>
+
+                            <td>
+                                {{ row.count }}
+                            </td>
+
+                            <td>
+                                ₹{{ row.amount }}
+                            </td>
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+                            <td colspan="3" class="empty">
+                                No payment data
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOOKING DETAILS -->
+    <div class="card">
+
+        <h2>Booking Details</h2>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Movie</th>
+                        <th>Theater</th>
+                        <th>Seat</th>
+                        <th>Booked At</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for row in booking_records %}
+
+                    <tr>
+
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+
+                        <td>
+                            {{ row.user__username }}
+                        </td>
+
+                        <td>
+                            {{ row.movie__name }}
+                        </td>
+
+                        <td>
+                            {{ row.theater__name }}
+                        </td>
+
+                        <td>
+                            {{ row.seat__seat_number }}
+                        </td>
+
+                        <td>
+                            {{ row.booked_at }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+                        <td colspan="6" class="empty">
+                            No booking records
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

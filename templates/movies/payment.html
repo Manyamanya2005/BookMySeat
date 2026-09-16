@@ -1,0 +1,1154 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Payment | BookMySeat</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            min-height: 100vh;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+
+        /* ================= PAGE ================= */
+
+        .page {
+            width: 100%;
+            flex: 1;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 62px;
+            background: #343a40;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 6%;
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            color: white;
+            text-decoration: none;
+
+            font-size: 20px;
+        }
+
+
+        .logo {
+            width: 42px;
+            height: 42px;
+
+            object-fit: contain;
+
+            margin-right: 10px;
+        }
+
+
+        /* ================= PAYMENT CARD ================= */
+
+        .payment-card {
+            width: 430px;
+            max-width: 90%;
+
+            background: white;
+
+            border-radius: 8px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 3px 15px
+                rgba(0, 0, 0, 0.10);
+        }
+
+
+        .payment-title {
+            font-size: 24px;
+            font-weight: bold;
+
+            margin-bottom: 6px;
+        }
+
+
+        .movie-info {
+            color: #777;
+
+            font-size: 13px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .label {
+            font-size: 13px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* ================= SEATS ================= */
+
+        .seat-list {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .seat-badge {
+            background: #20a44a;
+
+            color: white;
+
+            padding: 7px 11px;
+
+            border-radius: 4px;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= TOTAL ================= */
+
+        .total {
+            border-top: 1px solid #ddd;
+
+            padding-top: 15px;
+
+            margin-top: 5px;
+            margin-bottom: 20px;
+
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+
+        /* ================= TIMER ================= */
+
+        .timer {
+            text-align: center;
+
+            color: #ff1744;
+
+            font-weight: bold;
+
+            font-size: 16px;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* ================= STRIPE ================= */
+
+        .stripe-box {
+            background: #f7f7ff;
+
+            border: 1px solid #d8d8ff;
+
+            border-radius: 5px;
+
+            padding: 14px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .stripe-title {
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 6px;
+        }
+
+
+        .stripe-text {
+            font-size: 11px;
+
+            color: #666;
+
+            line-height: 1.5;
+        }
+
+
+        .payment-button {
+            width: 100%;
+
+            border: none;
+
+            background: #635bff;
+
+            color: white;
+
+            padding: 12px;
+
+            border-radius: 5px;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            margin-bottom: 10px;
+        }
+
+
+        .payment-button:hover {
+            background: #5148d8;
+        }
+
+
+        .payment-button:disabled {
+            background: #aaa;
+
+            cursor: not-allowed;
+        }
+
+
+        /* ================= CANCEL ================= */
+
+        .cancel-button {
+            width: 100%;
+
+            border: none;
+
+            background: #6c757d;
+
+            color: white;
+
+            padding: 12px;
+
+            border-radius: 5px;
+
+            font-size: 14px;
+
+            cursor: pointer;
+        }
+
+
+        .cancel-button:hover {
+            background: #5a6268;
+        }
+
+
+        /* ================= ERROR ================= */
+
+        .payment-error {
+            background: #ffe5e5;
+
+            color: #c62828;
+
+            padding: 10px;
+
+            border-radius: 5px;
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+
+            text-align: center;
+        }
+
+
+        /* ================= NOTE ================= */
+
+        .note {
+            text-align: center;
+
+            color: #777;
+
+            font-size: 10px;
+
+            margin-top: 12px;
+
+            line-height: 1.4;
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            text-align: center;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+           Matches Home Page Footer
+           ===================================================== */
+
+        .footer {
+            width: 100%;
+
+            background: #343a40;
+
+            color: #ffffff;
+
+            padding: 18px 0 10px;
+
+            margin-top: 0;
+
+            flex-shrink: 0;
+        }
+
+
+        .footer-content {
+            width: 80%;
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                1fr
+                1fr;
+
+            column-gap: 70px;
+        }
+
+
+        .footer-section {
+            min-width: 0;
+        }
+
+
+        .footer-section h4 {
+            color: #ffffff;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-bottom: 7px;
+        }
+
+
+        .footer-section p {
+            color: #ffffff;
+
+            font-size: 9px;
+
+            line-height: 1.5;
+
+            margin: 0;
+        }
+
+
+        .footer-section a {
+            display: block;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 9px;
+
+            line-height: 1.5;
+
+            margin-bottom: 2px;
+        }
+
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* ================= SOCIAL ICONS ================= */
+
+        .footer-social {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin-top: 2px;
+        }
+
+
+        .footer-social a {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            margin: 0;
+        }
+
+
+        .footer-social a:hover {
+            text-decoration: none;
+
+            opacity: 0.8;
+        }
+
+
+        .footer-social svg {
+            width: 15px;
+
+            height: 15px;
+        }
+
+
+        /* ================= FOOTER BOTTOM ================= */
+
+        .footer-bottom {
+            width: 80%;
+
+            max-width: 1100px;
+
+            margin: 10px auto 0;
+
+            padding-top: 9px;
+
+            border-top: 1px solid #495057;
+
+            text-align: center;
+
+            color: #ffffff;
+
+            font-size: 9px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+
+            .payment-card {
+                width: 430px;
+
+                max-width: 92%;
+            }
+
+
+            .footer {
+                padding: 18px 0 10px;
+            }
+
+
+            .footer-content {
+                width: 88%;
+
+                grid-template-columns: 1fr;
+
+                row-gap: 15px;
+            }
+
+
+            .footer-bottom {
+                width: 88%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a
+            href="{% url 'home' %}"
+            class="brand"
+        >
+
+            <img
+                src="{% static 'images/logo.png' %}"
+                alt="BookMySeat"
+                class="logo"
+            >
+
+            <span>
+                BookMySeat
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <!-- ================= PAYMENT PAGE ================= -->
+
+    <main class="page">
+
+        <div class="payment-card">
+
+
+            <div class="payment-title">
+                Payment
+            </div>
+
+
+            <div class="movie-info">
+
+                {{ theater.movie.name }}
+
+                &nbsp; - &nbsp;
+
+                {{ theater.name }}
+
+            </div>
+
+
+            {% if reservations %}
+
+
+                <!-- ================= SELECTED SEATS ================= -->
+
+                <div class="label">
+                    Selected Seats:
+                </div>
+
+
+                <div class="seat-list">
+
+                    {% for reservation in reservations %}
+
+                        <span class="seat-badge">
+
+                            {{ reservation.seat.seat_number }}
+
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ================= TOTAL SEATS ================= -->
+
+                <div class="total">
+
+                    <span>
+                        Total Seats:
+                    </span>
+
+                    <span>
+                        {{ reservations|length }}
+                    </span>
+
+                </div>
+
+
+                <!-- ================= TOTAL AMOUNT ================= -->
+
+                <div class="total">
+
+                    <span>
+                        Total Amount:
+                    </span>
+
+                    <span>
+                        ₹{{ total_amount }}
+                    </span>
+
+                </div>
+
+
+                <!-- ================= TIMER ================= -->
+
+                <div
+                    class="timer"
+                    id="timer"
+                    data-remaining-seconds="{{ remaining_seconds|default:0 }}"
+                >
+
+                    Reservation expires in:
+
+                    <span id="countdown">
+                        02:00
+                    </span>
+
+                </div>
+
+
+                <!-- =================================================
+                     STRIPE TEST MODE
+                     ================================================= -->
+
+                {% if stripe_enabled %}
+
+
+                    <div class="stripe-box">
+
+                        <div class="stripe-title">
+
+                            Stripe Test Mode
+
+                        </div>
+
+
+                        <div class="stripe-text">
+
+                            You will be redirected to
+                            Stripe Checkout to complete
+                            your test payment.
+
+                            <br><br>
+
+                            <strong>
+                                Test Card:
+                            </strong>
+
+                            4242 4242 4242 4242
+
+                            <br>
+
+                            <strong>
+                                Expiry:
+                            </strong>
+
+                            Any future date
+
+                            <br>
+
+                            <strong>
+                                CVC:
+                            </strong>
+
+                            Any 3 digits
+
+                            <br><br>
+
+                            No real money will be charged
+                            while using Stripe Test Mode.
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= PAYMENT BUTTON ================= -->
+
+                    <form
+                        method="POST"
+                        action="{% url 'payment_page' theater.id %}"
+                        id="paymentForm"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <button
+                            type="submit"
+                            class="payment-button"
+                            id="paymentButton"
+                        >
+
+                            Pay with Stripe
+
+                        </button>
+
+                    </form>
+
+
+                {% else %}
+
+
+                    <div class="payment-error">
+
+                        Stripe payment service is
+                        currently unavailable.
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="payment-button"
+                        disabled
+                    >
+
+                        Payment Unavailable
+
+                    </button>
+
+
+                {% endif %}
+
+
+                <!-- ================= NOTE ================= -->
+
+                <div class="note">
+
+                    Your seats remain reserved for 2 minutes.
+                    Complete payment before the reservation expires.
+
+                </div>
+
+
+            {% else %}
+
+
+                <div class="empty">
+
+                    No active seat reservation found.
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="footer">
+
+
+        <div class="footer-content">
+
+
+            <!-- ================= ABOUT US ================= -->
+
+            <div class="footer-section">
+
+                <h4>
+                    About Us
+                </h4>
+
+
+                <p>
+
+                    We provide the best movie experience in town.
+
+                    <br>
+
+                    Book your tickets now and enjoy the show!
+
+                </p>
+
+            </div>
+
+
+            <!-- ================= QUICK LINKS ================= -->
+
+            <div class="footer-section">
+
+                <h4>
+                    Quick Links
+                </h4>
+
+
+                <a href="{% url 'home' %}">
+                    Home
+                </a>
+
+
+                <a href="{% url 'movie_list' %}">
+                    Movies
+                </a>
+
+
+                <a href="{% url 'movie_list' %}">
+                    Book Tickets
+                </a>
+
+
+                <a href="#">
+                    Contact
+                </a>
+
+            </div>
+
+
+            <!-- ================= FOLLOW US ================= -->
+
+            <div class="footer-section">
+
+                <h4>
+                    Follow Us
+                </h4>
+
+
+                <div class="footer-social">
+
+
+                    <!-- FACEBOOK -->
+
+                    <a
+                        href="#"
+                        aria-label="Facebook"
+                    >
+
+                        <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+
+                            <path
+                                d="M14 8h3V4h-3c-3.31 0-5 1.69-5 5v3H6v4h3v8h4v-8h3.5l.5-4H13V9c0-.67.33-1 1-1z"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                    <!-- TWITTER -->
+
+                    <a
+                        href="#"
+                        aria-label="Twitter"
+                    >
+
+                        <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12 7.5v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                    <!-- INSTAGRAM -->
+
+                    <a
+                        href="#"
+                        aria-label="Instagram"
+                    >
+
+                        <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="5"
+                                ry="5"
+                            />
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="4"
+                            />
+
+                            <circle
+                                cx="17.5"
+                                cy="6.5"
+                                r="1"
+                                fill="currentColor"
+                                stroke="none"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= FOOTER COPYRIGHT ================= -->
+
+        <div class="footer-bottom">
+
+            © 2026 BookMySeat. All rights reserved.
+
+        </div>
+
+
+    </footer>
+
+
+    <!-- =====================================================
+         RESERVATION TIMER
+         ===================================================== -->
+
+    {% if reservations %}
+
+    <script>
+
+
+        const timerElement =
+            document.getElementById('timer');
+
+
+        const countdownElement =
+            document.getElementById('countdown');
+
+
+        const paymentButton =
+            document.getElementById('paymentButton');
+
+
+        const paymentForm =
+            document.getElementById('paymentForm');
+
+
+        let remainingSeconds =
+            Number(
+                timerElement.dataset.remainingSeconds || 0
+            );
+
+
+        let countdownInterval = null;
+
+
+        function updateTimer() {
+
+            if (remainingSeconds <= 0) {
+
+                countdownElement.textContent =
+                    '00:00';
+
+                return;
+
+            }
+
+
+            const minutes =
+                Math.floor(
+                    remainingSeconds / 60
+                );
+
+
+            const seconds =
+                remainingSeconds % 60;
+
+
+            countdownElement.textContent =
+                String(minutes).padStart(2, '0')
+                +
+                ':'
+                +
+                String(seconds).padStart(2, '0');
+
+        }
+
+
+        function reservationExpired() {
+
+            remainingSeconds = 0;
+
+
+            countdownElement.textContent =
+                '00:00';
+
+
+            if (paymentButton) {
+
+                paymentButton.disabled =
+                    true;
+
+                paymentButton.textContent =
+                    'Reservation Expired';
+
+            }
+
+
+            if (countdownInterval) {
+
+                clearInterval(
+                    countdownInterval
+                );
+
+                countdownInterval = null;
+
+            }
+
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "{% url 'seat_selection' theater.id %}";
+
+                },
+                1000
+            );
+
+        }
+
+
+        function startTimer() {
+
+            updateTimer();
+
+
+            if (remainingSeconds <= 0) {
+
+                reservationExpired();
+
+                return;
+
+            }
+
+
+            countdownInterval =
+                setInterval(
+                    function() {
+
+                        remainingSeconds--;
+
+                        updateTimer();
+
+
+                        if (remainingSeconds <= 0) {
+
+                            reservationExpired();
+
+                        }
+
+                    },
+                    1000
+                );
+
+        }
+
+
+        startTimer();
+
+
+        /* =====================================================
+           STRIPE CHECKOUT
+           ===================================================== */
+
+        if (paymentForm) {
+
+            paymentForm.addEventListener(
+                'submit',
+                function(event) {
+
+                    if (remainingSeconds <= 0) {
+
+                        event.preventDefault();
+
+                        return;
+
+                    }
+
+
+                    if (paymentButton) {
+
+                        paymentButton.disabled =
+                            true;
+
+                        paymentButton.textContent =
+                            'Redirecting to Stripe...';
+
+                    }
+
+                }
+            );
+
+        }
+
+
+    </script>
+
+    {% endif %}
+
+
+</body>
+
+</html>

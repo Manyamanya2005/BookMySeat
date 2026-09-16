@@ -1,0 +1,1789 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{ movie.name }} - BookMySeat</title>
+
+
+    <!-- BOOTSTRAP -->
+
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    >
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            margin: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            min-height: 70px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            height: 32px;
+            width: auto;
+        }
+
+        .navbar-brand {
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+
+        /* ================= MAIN CONTENT ================= */
+
+        .main-content {
+            flex: 1;
+            width: 100%;
+        }
+
+
+        /* ================= MOVIE DETAILS ================= */
+
+        .movie-detail-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .movie-detail-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 35px;
+
+            box-shadow:
+                0 2px 10px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        .movie-poster {
+            width: 100%;
+            max-width: 380px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 6px;
+        }
+
+        .movie-title {
+            font-size: 38px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .rating {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .rating i {
+            color: #f5b301;
+        }
+
+        .movie-info {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .movie-info strong {
+            font-weight: 600;
+        }
+
+        .movie-description-title,
+        .cast-title {
+            font-size: 22px;
+            font-weight: 500;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .movie-description {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .cast {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .movie-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .theater-button {
+            background-color: #343a40;
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+        }
+
+        .theater-button:hover {
+            background-color: #23272b;
+            color: #ffffff;
+        }
+
+        .trailer-button {
+            background-color: #dc3545;
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+        }
+
+        .trailer-button:hover {
+            background-color: #c82333;
+            color: #ffffff;
+        }
+
+
+        /* ================= TRAILER ================= */
+
+        .trailer-section {
+            margin-top: 30px;
+        }
+
+        .trailer-title {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .trailer-container {
+            display: none;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+
+        /* ================= REVIEWS ================= */
+
+        .reviews-section {
+            margin-top: 40px;
+        }
+
+        .reviews-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+
+            box-shadow:
+                0 2px 10px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        .reviews-title {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .review-item {
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .review-user {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .review-stars {
+            color: #f5b301;
+            margin-left: 8px;
+            font-size: 15px;
+        }
+
+        .review-comment {
+            font-size: 16px;
+            color: #555;
+            margin-top: 10px;
+            margin-bottom: 6px;
+        }
+
+        .review-date {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .no-reviews {
+            color: #777;
+            margin-bottom: 0;
+        }
+
+
+        /* ================= RECOMMENDATIONS ================= */
+
+        .recommendation-section {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            padding: 0 20px;
+        }
+
+        .recommendation-card {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 100%;
+
+            box-shadow:
+                0 1px 3px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        .recommendation-image {
+            width: 100%;
+            height: 260px;
+            display: block;
+            object-fit: fill;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .recommendation-body {
+            padding: 12px;
+        }
+
+        .recommendation-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            min-height: 20px;
+        }
+
+        .recommendation-rating {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .recommendation-rating i {
+            color: #f5b301;
+        }
+
+        .recommendation-date {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .recommendation-button {
+            font-size: 11px;
+            padding: 4px 8px;
+        }
+
+
+        /* ================= RECOMMENDATION CARD ALIGNMENT ================= */
+
+        .reviews-section .card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reviews-section .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reviews-section .card-body .btn {
+            margin-top: auto;
+            align-self: flex-start;
+        }
+
+        .reviews-section .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .reviews-section .row > [class*="col-"] {
+            display: flex;
+        }
+
+
+        /* ================= ADDITIONAL POSTERS ================= */
+
+        .additional-posters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .additional-poster {
+            width: 120px;
+            height: 175px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+
+            width: 100%;
+
+            padding: 25px 3.5% 12px;
+
+            margin-top: 50px;
+
+            flex-shrink: 0;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                1fr
+                1fr;
+
+            gap: 40px;
+        }
+
+        .footer-section h4 {
+            font-size: 13px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: #ffffff;
+            font-size: 9px;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        .footer-section a {
+            display: block;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 9px;
+
+            margin-bottom: 3px;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+            color: #ffffff;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+
+            margin: 0;
+
+            color: #ffffff;
+        }
+
+        .footer-social a:hover {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .footer-social svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+
+            margin: 12px auto 0;
+
+            padding-top: 10px;
+
+            border-top: 1px solid #495057;
+
+            text-align: center;
+
+            color: #ffffff;
+
+            font-size: 9px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            .movie-title {
+                font-size: 30px;
+                margin-top: 25px;
+            }
+
+            .movie-detail-card {
+                padding: 20px;
+            }
+
+            .movie-buttons {
+                flex-wrap: wrap;
+            }
+
+            .recommendation-image {
+                height: 220px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .footer {
+                padding: 20px 6% 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="container">
+
+            <a
+                class="navbar-brand"
+                href="{% url 'home' %}"
+            >
+
+                <img
+                    src="{% static 'images/logo.png' %}"
+                    class="logo mr-2"
+                    alt="BookMySeat Logo"
+                >
+
+                BookMySeat
+
+            </a>
+
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+            >
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <div
+                class="collapse navbar-collapse"
+                id="navbarNav"
+            >
+
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'home' %}"
+                        >
+                            Home
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'movie_list' %}"
+                        >
+                            Movies
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'profile' %}"
+                        >
+                            Profile
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'logout' %}"
+                        >
+                            Logout
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             MOVIE DETAILS
+        ================================================== -->
+
+        <div class="movie-detail-container">
+
+            <div class="movie-detail-card">
+
+                <div class="row">
+
+
+                    <!-- ================= POSTER ================= -->
+
+                    <div class="col-md-5">
+
+                        {% if movie.image %}
+
+                            <img
+                                src="{{ movie.image.url }}"
+                                class="movie-poster"
+                                alt="{{ movie.name }}"
+                            >
+
+                        {% endif %}
+
+
+                        <!-- ADDITIONAL POSTERS -->
+
+                        {% if movie.posters.all %}
+
+                            <div class="additional-posters">
+
+                                {% for poster in movie.posters.all %}
+
+                                    {% if poster.image %}
+
+                                        <img
+                                            src="{{ poster.image.url }}"
+                                            class="additional-poster"
+                                            alt="{{ movie.name }} Poster"
+                                        >
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================= INFORMATION ================= -->
+
+                    <div class="col-md-7">
+
+
+                        <h1 class="movie-title">
+                            {{ movie.name }}
+                        </h1>
+
+
+                        <!-- RATING -->
+
+                        <div class="rating">
+
+                            <i class="fas fa-star"></i>
+
+                            <strong>
+
+                                {% if average_rating %}
+
+                                    {{ average_rating }}
+
+                                {% else %}
+
+                                    {{ movie.rating }}
+
+                                {% endif %}
+
+                            </strong>
+
+
+                            {% if average_rating %}
+
+                                / 5
+
+                            {% else %}
+
+                                / 10
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- GENRE -->
+
+                        {% if movie.genre %}
+
+                            <div class="movie-info">
+
+                                <strong>
+                                    Genre:
+                                </strong>
+
+                                {{ movie.genre }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- LANGUAGE -->
+
+                        {% if movie.language %}
+
+                            <div class="movie-info">
+
+                                <strong>
+                                    Language:
+                                </strong>
+
+                                {{ movie.language }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- CERTIFICATION -->
+
+                        {% if movie.certification %}
+
+                            <div class="movie-info">
+
+                                <strong>
+                                    Certification:
+                                </strong>
+
+                                {{ movie.certification }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- DURATION -->
+
+                        {% if movie.duration %}
+
+                            <div class="movie-info">
+
+                                <strong>
+                                    Duration:
+                                </strong>
+
+                                {{ movie.duration }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- RELEASE DATE -->
+
+                        {% if movie.release_date %}
+
+                            <div class="movie-info">
+
+                                <strong>
+                                    Release Date:
+                                </strong>
+
+                                {{ movie.release_date|date:"d M Y" }}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- CAST -->
+
+                        {% if movie.cast %}
+
+                            <div class="cast-title">
+                                Cast
+                            </div>
+
+                            <div class="cast">
+                                {{ movie.cast }}
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- DESCRIPTION -->
+
+                        {% if movie.description %}
+
+                            <div class="movie-description-title">
+                                About the Movie
+                            </div>
+
+                            <div class="movie-description">
+                                {{ movie.description }}
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="movie-buttons">
+
+                            <a
+                                href="{% url 'theater_list' movie.id %}"
+                                class="btn theater-button"
+                            >
+
+                                View Theaters
+
+                                <i class="fas fa-chevron-right ml-2"></i>
+
+                            </a>
+
+
+                            {% if movie.trailer_url %}
+
+                                <button
+                                    type="button"
+                                    class="btn trailer-button"
+                                    onclick="playTrailer()"
+                                >
+
+                                    <i class="fas fa-play mr-2"></i>
+
+                                    Watch Trailer
+
+                                </button>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- TRAILER -->
+
+                        {% if movie.trailer_url %}
+
+                            <div
+                                id="trailer-section"
+                                class="trailer-section"
+                                style="display: none;"
+                            >
+
+                                <h3 class="trailer-title">
+                                    Trailer
+                                </h3>
+
+
+                                <div
+                                    id="trailer-container"
+                                    class="embed-responsive embed-responsive-16by9 trailer-container"
+                                    style="display: block;"
+                                >
+
+                                    <iframe
+                                        id="trailer-frame"
+                                        class="embed-responsive-item"
+                                        src=""
+                                        title="{{ movie.name }} Trailer"
+                                        referrerpolicy="strict-origin-when-cross-origin"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen
+                                    >
+                                    </iframe>
+
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RATINGS & REVIEWS
+            ================================================== -->
+
+            <div class="reviews-section">
+
+                <div class="reviews-card">
+
+
+                    <div class="reviews-title">
+                        Ratings & Reviews
+                    </div>
+
+
+                    <!-- WRITE A REVIEW -->
+
+                    <div class="mb-4">
+
+                        {% if has_watched and not has_reviewed %}
+
+                            <h5>
+                                Write a Review
+                            </h5>
+
+
+                            <form method="POST">
+
+                                {% csrf_token %}
+
+
+                                <div class="form-group">
+
+                                    <label for="rating">
+                                        Rating
+                                    </label>
+
+
+                                    <select
+                                        name="rating"
+                                        id="rating"
+                                        class="form-control"
+                                        required
+                                    >
+
+                                        <option value="">
+                                            Select Rating
+                                        </option>
+
+                                        <option value="5">
+                                            ★★★★★ - 5
+                                        </option>
+
+                                        <option value="4">
+                                            ★★★★☆ - 4
+                                        </option>
+
+                                        <option value="3">
+                                            ★★★☆☆ - 3
+                                        </option>
+
+                                        <option value="2">
+                                            ★★☆☆☆ - 2
+                                        </option>
+
+                                        <option value="1">
+                                            ★☆☆☆☆ - 1
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="comment">
+                                        Your Review
+                                    </label>
+
+
+                                    <textarea
+                                        name="comment"
+                                        id="comment"
+                                        class="form-control"
+                                        rows="4"
+                                        placeholder="Write your review..."
+                                        required
+                                    ></textarea>
+
+                                </div>
+
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-dark"
+                                >
+                                    Submit Review
+                                </button>
+
+                            </form>
+
+
+                        {% elif has_reviewed %}
+
+                            <p class="text-success mb-0">
+
+                                You have already reviewed this movie.
+
+                            </p>
+
+
+                        {% else %}
+
+                            <p class="text-muted mb-0">
+
+                                Book and watch this movie to write a review.
+
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- REVIEWS -->
+
+                    {% if reviews %}
+
+                        {% for review in reviews %}
+
+                            <div class="review-item">
+
+
+                                <div>
+
+                                    <span class="review-user">
+                                        {{ review.user.username }}
+                                    </span>
+
+
+                                    <!-- VERIFIED VIEWER -->
+
+                                    {% if review.user_id in watched_user_ids %}
+
+                                        <span class="badge badge-success ml-2">
+
+                                            <i class="fas fa-check-circle"></i>
+
+                                            Verified Viewer
+
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    <!-- REVIEW STARS -->
+
+                                    <span class="review-stars">
+
+                                        {% for i in "12345" %}
+
+                                            {% if forloop.counter <= review.rating %}
+
+                                                ★
+
+                                            {% else %}
+
+                                                ☆
+
+                                            {% endif %}
+
+                                        {% endfor %}
+
+                                    </span>
+
+                                </div>
+
+
+                                <!-- COMMENT -->
+
+                                <div class="review-comment">
+
+                                    {{ review.comment }}
+
+                                </div>
+
+
+                                <!-- DATE -->
+
+                                <div class="review-date">
+
+                                    {{ review.created_at|date:"d M Y" }}
+
+                                </div>
+
+
+                                <!-- REPORT -->
+
+                                {% if review.user != request.user %}
+
+                                    <form
+                                        method="POST"
+                                        action="{% url 'report_review' review.id %}"
+                                        class="mt-2"
+                                    >
+
+                                        {% csrf_token %}
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-sm btn-outline-danger"
+                                        >
+
+                                            <i class="fas fa-flag"></i>
+
+                                            Report
+
+                                        </button>
+
+                                    </form>
+
+                                {% endif %}
+
+
+                                <!-- EDIT -->
+
+                                {% if review.user == request.user %}
+
+                                    <a
+                                        href="{% url 'edit_review' review.id %}"
+                                        class="btn btn-sm btn-outline-dark mt-2"
+                                    >
+                                        Edit Review
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+                        {% endfor %}
+
+
+                    {% else %}
+
+                        <p class="no-reviews">
+                            No reviews yet.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SIMILAR MOVIES
+        ================================================== -->
+
+        {% if similar_movies %}
+
+            <div class="recommendation-section">
+
+                <div class="reviews-card">
+
+                    <div class="reviews-title">
+                        Similar Movies
+                    </div>
+
+
+                    <div class="row">
+
+                        {% for similar in similar_movies %}
+
+                            <div class="col-md-3 mb-4">
+
+                                <div class="recommendation-card">
+
+                                    {% if similar.image %}
+
+                                        <img
+                                            src="{{ similar.image.url }}"
+                                            class="recommendation-image"
+                                            alt="{{ similar.name }}"
+                                        >
+
+                                    {% endif %}
+
+
+                                    <div class="recommendation-body">
+
+                                        <div class="recommendation-title">
+                                            {{ similar.name }}
+                                        </div>
+
+
+                                        <div class="recommendation-rating">
+
+                                            <i class="fas fa-star"></i>
+
+                                            {{ similar.rating }}
+
+                                        </div>
+
+
+                                        <a
+                                            href="{% url 'movie_detail' similar.id %}"
+                                            class="btn btn-sm btn-dark recommendation-button"
+                                        >
+                                            View Movie
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             RECOMMENDED FOR YOU
+             TASK 5
+        ================================================== -->
+
+        {% if recommended_movies %}
+
+            <div class="recommendation-section">
+
+                <div class="reviews-card">
+
+                    <div class="reviews-title">
+                        Recommended for You
+                    </div>
+
+
+                    <div class="row">
+
+                        {% for recommended in recommended_movies %}
+
+                            <div class="col-md-3 mb-4">
+
+                                <div class="recommendation-card">
+
+                                    {% if recommended.image %}
+
+                                        <img
+                                            src="{{ recommended.image.url }}"
+                                            class="recommendation-image"
+                                            alt="{{ recommended.name }}"
+                                        >
+
+                                    {% endif %}
+
+
+                                    <div class="recommendation-body">
+
+                                        <div class="recommendation-title">
+                                            {{ recommended.name }}
+                                        </div>
+
+
+                                        <div class="recommendation-rating">
+
+                                            <i class="fas fa-star"></i>
+
+                                            {{ recommended.rating }}
+
+                                        </div>
+
+
+                                        {% if recommended.genre %}
+
+                                            <div class="recommendation-date">
+
+                                                {{ recommended.genre }}
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        <a
+                                            href="{% url 'movie_detail' recommended.id %}"
+                                            class="btn btn-sm btn-dark recommendation-button"
+                                        >
+                                            View Movie
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             TRENDING MOVIES
+        ================================================== -->
+
+        {% if trending_movies %}
+
+            <div class="recommendation-section">
+
+                <div class="reviews-card">
+
+                    <div class="reviews-title">
+                        Trending Movies
+                    </div>
+
+
+                    <div class="row">
+
+                        {% for trending in trending_movies %}
+
+                            <div class="col-md-3 mb-4">
+
+                                <div class="recommendation-card">
+
+                                    {% if trending.image %}
+
+                                        <img
+                                            src="{{ trending.image.url }}"
+                                            class="recommendation-image"
+                                            alt="{{ trending.name }}"
+                                        >
+
+                                    {% endif %}
+
+
+                                    <div class="recommendation-body">
+
+                                        <div class="recommendation-title">
+                                            {{ trending.name }}
+                                        </div>
+
+
+                                        <div class="recommendation-rating">
+
+                                            <i class="fas fa-ticket-alt"></i>
+
+                                            {{ trending.booking_count }} bookings
+
+                                        </div>
+
+
+                                        <a
+                                            href="{% url 'movie_detail' trending.id %}"
+                                            class="btn btn-sm btn-dark recommendation-button"
+                                        >
+                                            View Movie
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             RECENTLY RELEASED
+        ================================================== -->
+
+        {% if recent_movies %}
+
+            <div class="recommendation-section">
+
+                <div class="reviews-card">
+
+                    <div class="reviews-title">
+                        Recently Released
+                    </div>
+
+
+                    <div class="row">
+
+                        {% for recent in recent_movies %}
+
+                            <div class="col-md-3 mb-4">
+
+                                <div class="recommendation-card">
+
+                                    {% if recent.image %}
+
+                                        <img
+                                            src="{{ recent.image.url }}"
+                                            class="recommendation-image"
+                                            alt="{{ recent.name }}"
+                                        >
+
+                                    {% endif %}
+
+
+                                    <div class="recommendation-body">
+
+                                        <div class="recommendation-title">
+                                            {{ recent.name }}
+                                        </div>
+
+
+                                        <div class="recommendation-date">
+
+                                            {{ recent.release_date|date:"d M Y" }}
+
+                                        </div>
+
+
+                                        <a
+                                            href="{% url 'movie_detail' recent.id %}"
+                                            class="btn btn-sm btn-dark recommendation-button"
+                                        >
+                                            View Movie
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+
+            <!-- ================= ABOUT US ================= -->
+
+            <div class="footer-section">
+
+                <h4>
+                    About Us
+                </h4>
+
+
+                <p>
+
+                    We provide the best movie experience in town.
+
+                    <br>
+
+                    Book your tickets now and enjoy the show!
+
+                </p>
+
+            </div>
+
+
+            <!-- ================= QUICK LINKS ================= -->
+
+            <div class="footer-section">
+
+                <h4>
+                    Quick Links
+                </h4>
+
+
+                <a href="{% url 'home' %}">
+                    Home
+                </a>
+
+
+                <a href="{% url 'movie_list' %}">
+                    Movies
+                </a>
+
+
+                <a href="{% url 'movie_list' %}">
+                    Book Tickets
+                </a>
+
+
+                <a href="#">
+                    Contact
+                </a>
+
+            </div>
+
+
+            <!-- ================= FOLLOW US ================= -->
+
+            <div class="footer-section">
+
+                <h4>
+                    Follow Us
+                </h4>
+
+
+                <div class="footer-social">
+
+
+                    <!-- FACEBOOK -->
+
+                    <a
+                        href="#"
+                        aria-label="Facebook"
+                    >
+
+                        <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+
+                            <path
+                                d="M14 8h3V4h-3c-3.31 0-5 1.69-5 5v3H6v4h3v8h4v-8h3.5l.5-4H13V9c0-.67.33-1 1-1z"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                    <!-- TWITTER -->
+
+                    <a
+                        href="#"
+                        aria-label="Twitter"
+                    >
+
+                        <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12 7.5v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                    <!-- INSTAGRAM -->
+
+                    <a
+                        href="#"
+                        aria-label="Instagram"
+                    >
+
+                        <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="5"
+                                ry="5"
+                            />
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="4"
+                            />
+
+                            <circle
+                                cx="17.5"
+                                cy="6.5"
+                                r="1"
+                                fill="currentColor"
+                                stroke="none"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= FOOTER BOTTOM ================= -->
+
+        <div class="footer-bottom">
+
+            © 2026 BookMySeat. All Rights Reserved.
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         BOOTSTRAP JS
+    ====================================================== -->
+
+    <script
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    >
+    </script>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"
+    >
+    </script>
+
+
+    <!-- =====================================================
+         TRAILER SCRIPT
+    ====================================================== -->
+
+    <script>
+
+        function playTrailer() {
+
+            let trailerUrl =
+                "{{ movie.trailer_url|escapejs }}";
+
+
+            let videoId = "";
+
+
+            /* NORMAL YOUTUBE URL */
+
+            if (
+                trailerUrl.includes("watch?v=")
+            ) {
+
+                videoId =
+                    trailerUrl
+                        .split("watch?v=")[1]
+                        .split("&")[0];
+
+            }
+
+
+            /* SHORT YOUTUBE URL */
+
+            else if (
+                trailerUrl.includes("youtu.be/")
+            ) {
+
+                videoId =
+                    trailerUrl
+                        .split("youtu.be/")[1]
+                        .split("?")[0];
+
+            }
+
+
+            /* EMBED URL */
+
+            else if (
+                trailerUrl.includes("/embed/")
+            ) {
+
+                videoId =
+                    trailerUrl
+                        .split("/embed/")[1]
+                        .split("?")[0];
+
+            }
+
+
+            if (videoId) {
+
+                let embedUrl =
+                    "https://www.youtube-nocookie.com/embed/" +
+                    videoId +
+                    "?autoplay=1&rel=0";
+
+
+                document.getElementById(
+                    "trailer-frame"
+                ).src = embedUrl;
+
+
+                document.getElementById(
+                    "trailer-section"
+                ).style.display = "block";
+
+
+                document.getElementById(
+                    "trailer-section"
+                ).scrollIntoView({
+
+                    behavior: "smooth",
+
+                    block: "center"
+
+                });
+
+            }
+
+
+            else {
+
+                alert(
+                    "Invalid YouTube trailer URL."
+                );
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
