@@ -13,7 +13,10 @@ except ImportError:
 
 SECRET_KEY = os.getenv(
     "SECRET_KEY",
-    os.getenv("DJANGO_SECRET_KEY", "django-insecure-local-development-key")
+    os.getenv(
+        "DJANGO_SECRET_KEY",
+        "django-insecure-local-development-key"
+    )
 )
 
 
@@ -21,9 +24,7 @@ DEBUG = os.getenv("DEBUG", "False").strip().lower() == "true"
 
 
 ALLOWED_HOSTS = [
-    "bookmyseat-lduz.onrender.com",
-    "localhost",
-    "127.0.0.1",
+    "*",
 ]
 
 
