@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,9 +27,7 @@
                 Arial,
                 Helvetica,
                 sans-serif;
-
             background: #f4f6f9;
-
             color: #111827;
         }
 
@@ -39,19 +38,11 @@
             padding: 25px;
         }
 
-        /* ==================================================
-           HEADER
-        ================================================== */
-
         .header {
             background: white;
-
             padding: 25px;
-
             border-radius: 12px;
-
             margin-bottom: 20px;
-
             box-shadow:
                 0 2px 8px
                 rgba(0, 0, 0, 0.08);
@@ -59,29 +50,19 @@
 
         .header h1 {
             margin: 0 0 8px 0;
-
             font-size: 30px;
         }
 
         .header p {
             margin: 0;
-
             color: #6b7280;
         }
 
-        /* ==================================================
-           SEARCH
-        ================================================== */
-
         .search-box {
             background: white;
-
             padding: 20px;
-
             border-radius: 12px;
-
             margin-bottom: 20px;
-
             box-shadow:
                 0 2px 8px
                 rgba(0, 0, 0, 0.08);
@@ -89,39 +70,26 @@
 
         .search-form {
             display: flex;
-
             gap: 10px;
         }
 
         .search-input {
             flex: 1;
-
             height: 44px;
-
             padding: 0 14px;
-
             border:
                 1px solid #d1d5db;
-
             border-radius: 7px;
-
             font-size: 14px;
         }
 
         .search-button {
             border: none;
-
             background: #2563eb;
-
             color: white;
-
-            padding:
-                0 24px;
-
+            padding: 0 24px;
             border-radius: 7px;
-
             font-weight: 700;
-
             cursor: pointer;
         }
 
@@ -129,19 +97,11 @@
             background: #1d4ed8;
         }
 
-        /* ==================================================
-           FILTERS
-        ================================================== */
-
         .filter-box {
             background: white;
-
             padding: 20px;
-
             border-radius: 12px;
-
             margin-bottom: 20px;
-
             box-shadow:
                 0 2px 8px
                 rgba(0, 0, 0, 0.08);
@@ -149,141 +109,87 @@
 
         .filter-title {
             font-size: 18px;
-
             font-weight: 700;
-
             margin-bottom: 15px;
         }
 
         .filter-grid {
             display: grid;
-
             grid-template-columns:
                 repeat(4, 1fr);
-
             gap: 14px;
         }
 
         .filter-group {
             display: flex;
-
             flex-direction: column;
-
             gap: 6px;
         }
 
         .filter-group label {
             font-size: 12px;
-
             font-weight: 700;
-
             color: #374151;
         }
 
         .filter-group input,
         .filter-group select {
-
             height: 40px;
-
-            padding:
-                0 10px;
-
+            padding: 0 10px;
             border:
                 1px solid #d1d5db;
-
             border-radius: 7px;
-
             background: white;
-
             font-size: 13px;
         }
 
         .filter-actions {
             display: flex;
-
             gap: 10px;
-
             margin-top: 15px;
         }
 
         .apply-button {
             height: 40px;
-
-            padding:
-                0 22px;
-
+            padding: 0 22px;
             border: none;
-
             border-radius: 7px;
-
             background: #2563eb;
-
             color: white;
-
             font-weight: 700;
-
             cursor: pointer;
         }
 
         .clear-button {
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
-
             height: 40px;
-
-            padding:
-                0 22px;
-
+            padding: 0 22px;
             border-radius: 7px;
-
             background: #e5e7eb;
-
             color: #111827;
-
             text-decoration: none;
-
             font-weight: 700;
         }
 
-        /* ==================================================
-           RESULT COUNT
-        ================================================== */
-
         .result-info {
             background: #eff6ff;
-
             border:
                 1px solid #93c5fd;
-
             color: #1e40af;
-
             padding: 14px 16px;
-
             border-radius: 8px;
-
             margin-bottom: 20px;
-
             font-size: 14px;
-
             font-weight: 600;
         }
 
-        /* ==================================================
-           RECOMMENDATIONS
-        ================================================== */
-
         .section {
             background: white;
-
             padding: 20px;
-
             border-radius: 12px;
-
             margin-bottom: 20px;
-
             box-shadow:
                 0 2px 8px
                 rgba(0, 0, 0, 0.08);
@@ -291,41 +197,47 @@
 
         .section-title {
             margin: 0 0 18px 0;
-
             font-size: 21px;
         }
 
         .movie-grid {
             display: grid;
-
             grid-template-columns:
                 repeat(4, 1fr);
-
             gap: 18px;
         }
 
         .movie-card {
             border:
                 1px solid #e5e7eb;
-
             border-radius: 10px;
-
             overflow: hidden;
-
             background: white;
-
             transition:
                 transform 0.2s,
                 box-shadow 0.2s;
         }
 
         .movie-card:hover {
-            transform:
-                translateY(-3px);
-
+            transform: translateY(-3px);
             box-shadow:
                 0 5px 16px
                 rgba(0, 0, 0, 0.12);
+        }
+
+        /*
+        ==================================================
+        POSTER
+        ==================================================
+        */
+
+        .movie-poster {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            background: #eeeeee;
+            border-radius: 10px 10px 0 0;
         }
 
         .movie-content {
@@ -334,63 +246,44 @@
 
         .movie-title {
             font-size: 17px;
-
             font-weight: 700;
-
             margin-bottom: 8px;
         }
 
         .movie-info {
             font-size: 12px;
-
             color: #6b7280;
-
             margin-bottom: 5px;
         }
 
         .movie-rating {
             color: #d97706;
-
             font-weight: 700;
-
             margin-top: 8px;
         }
 
         .movie-price {
             color: #15803d;
-
             font-weight: 700;
-
             margin-top: 6px;
         }
 
         .movie-bookings {
             color: #2563eb;
-
             font-size: 12px;
-
             margin-top: 5px;
         }
 
         .view-button {
             display: block;
-
             text-align: center;
-
             background: #2563eb;
-
             color: white;
-
             text-decoration: none;
-
             padding: 10px;
-
             margin-top: 13px;
-
             border-radius: 6px;
-
             font-size: 13px;
-
             font-weight: 700;
         }
 
@@ -398,59 +291,35 @@
             background: #1d4ed8;
         }
 
-        /* ==================================================
-           PAGINATION
-        ================================================== */
-
         .pagination {
             display: flex;
-
             justify-content: center;
-
             align-items: center;
-
             gap: 7px;
-
             margin-top: 25px;
-
             flex-wrap: wrap;
         }
 
         .page-link {
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
-
             min-width: 38px;
-
             height: 38px;
-
-            padding:
-                0 10px;
-
+            padding: 0 10px;
             border:
                 1px solid #d1d5db;
-
             border-radius: 6px;
-
             text-decoration: none;
-
             color: #374151;
-
             background: white;
-
             font-size: 13px;
-
             font-weight: 600;
         }
 
         .page-link.active {
             background: #2563eb;
-
             color: white;
-
             border-color: #2563eb;
         }
 
@@ -458,25 +327,13 @@
             background: #eff6ff;
         }
 
-        /* ==================================================
-           EMPTY
-        ================================================== */
-
         .empty {
             text-align: center;
-
             padding: 40px;
-
             color: #6b7280;
         }
 
-        /* ==================================================
-           RESPONSIVE
-        ================================================== */
-
-        @media (
-            max-width: 1100px
-        ) {
+        @media (max-width: 1100px) {
 
             .filter-grid {
                 grid-template-columns:
@@ -487,12 +344,9 @@
                 grid-template-columns:
                     repeat(3, 1fr);
             }
-
         }
 
-        @media (
-            max-width: 750px
-        ) {
+        @media (max-width: 750px) {
 
             .filter-grid {
                 grid-template-columns: 1fr;
@@ -510,12 +364,9 @@
             .search-button {
                 height: 42px;
             }
-
         }
 
-        @media (
-            max-width: 500px
-        ) {
+        @media (max-width: 500px) {
 
             .container {
                 padding: 10px;
@@ -534,21 +385,19 @@
                 width: 100%;
             }
 
+            .movie-poster {
+                height: 320px;
+            }
         }
 
     </style>
 
 </head>
 
-
 <body>
 
 <div class="container">
 
-
-    <!-- ==================================================
-         HEADER
-    ================================================== -->
 
     <div class="header">
 
@@ -562,10 +411,6 @@
 
     </div>
 
-
-    <!-- ==================================================
-         SEARCH
-    ================================================== -->
 
     <div class="search-box">
 
@@ -594,32 +439,21 @@
     </div>
 
 
-    <!-- ==================================================
-         FILTERS
-    ================================================== -->
-
     <div class="filter-box">
 
         <div class="filter-title">
             🔎 Filter Movies
         </div>
 
-
         <form method="get">
 
-
-            <!-- Keep search -->
             <input
                 type="hidden"
                 name="q"
                 value="{{ search_query }}"
             >
 
-
             <div class="filter-grid">
-
-
-                <!-- GENRE -->
 
                 <div class="filter-group">
 
@@ -635,14 +469,14 @@
 
                         {% for item in genres %}
 
-                            <option
-                                value="{{ item }}"
-                                {% if selected_genre == item %}
-                                    selected
-                                {% endif %}
-                            >
-                                {{ item }}
-                            </option>
+                        <option
+                            value="{{ item }}"
+                            {% if selected_genre == item %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ item }}
+                        </option>
 
                         {% endfor %}
 
@@ -650,8 +484,6 @@
 
                 </div>
 
-
-                <!-- LANGUAGE -->
 
                 <div class="filter-group">
 
@@ -667,14 +499,14 @@
 
                         {% for item in languages %}
 
-                            <option
-                                value="{{ item }}"
-                                {% if selected_language == item %}
-                                    selected
-                                {% endif %}
-                            >
-                                {{ item }}
-                            </option>
+                        <option
+                            value="{{ item }}"
+                            {% if selected_language == item %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ item }}
+                        </option>
 
                         {% endfor %}
 
@@ -682,8 +514,6 @@
 
                 </div>
 
-
-                <!-- CITY -->
 
                 <div class="filter-group">
 
@@ -699,14 +529,14 @@
 
                         {% for item in cities %}
 
-                            <option
-                                value="{{ item }}"
-                                {% if selected_city == item %}
-                                    selected
-                                {% endif %}
-                            >
-                                {{ item }}
-                            </option>
+                        <option
+                            value="{{ item }}"
+                            {% if selected_city == item %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ item }}
+                        </option>
 
                         {% endfor %}
 
@@ -714,8 +544,6 @@
 
                 </div>
 
-
-                <!-- THEATER -->
 
                 <div class="filter-group">
 
@@ -731,14 +559,14 @@
 
                         {% for item in theaters %}
 
-                            <option
-                                value="{{ item.name }}"
-                                {% if selected_theater == item.name %}
-                                    selected
-                                {% endif %}
-                            >
-                                {{ item.name }}
-                            </option>
+                        <option
+                            value="{{ item.name }}"
+                            {% if selected_theater == item.name %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ item.name }}
+                        </option>
 
                         {% endfor %}
 
@@ -746,8 +574,6 @@
 
                 </div>
 
-
-                <!-- RELEASE DATE -->
 
                 <div class="filter-group">
 
@@ -763,8 +589,6 @@
 
                 </div>
 
-
-                <!-- RATING -->
 
                 <div class="filter-group">
 
@@ -828,8 +652,6 @@
                 </div>
 
 
-                <!-- SHOW TIME -->
-
                 <div class="filter-group">
 
                     <label>
@@ -882,8 +704,6 @@
 
                 </div>
 
-
-                <!-- SORT -->
 
                 <div class="filter-group">
 
@@ -942,7 +762,6 @@
 
                 </div>
 
-
             </div>
 
 
@@ -955,7 +774,6 @@
                     Apply Filters
                 </button>
 
-
                 <a
                     href="{% url 'movie_list' %}"
                     class="clear-button"
@@ -965,15 +783,10 @@
 
             </div>
 
-
         </form>
 
     </div>
 
-
-    <!-- ==================================================
-         MATCHING COUNT
-    ================================================== -->
 
     <div class="result-info">
 
@@ -988,107 +801,114 @@
     </div>
 
 
-    <!-- ==================================================
-         RECOMMENDED FOR YOU
-    ================================================== -->
-
     <div class="section">
 
         <h2 class="section-title">
             ⭐ Recommended for You
         </h2>
 
-
         {% if recommended_movies %}
 
-            <div class="movie-grid">
+        <div class="movie-grid">
 
-                {% for movie in recommended_movies %}
+            {% for movie in recommended_movies %}
 
-                    <div class="movie-card">
+            <div class="movie-card">
 
-                        <div class="movie-content">
+                {% if movie.image %}
 
-                            <div class="movie-title">
-                                {{ movie.name }}
-                            </div>
+                <img
+                    src="{% static 'media/'|add:movie.image.name %}"
+                    alt="{{ movie.name }}"
+                    class="movie-poster"
+                    loading="lazy"
+                    onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=No+Poster';"
+                >
 
+                {% else %}
 
-                            {% if movie.genre %}
+                <img
+                    src="https://via.placeholder.com/300x450?text=No+Poster"
+                    alt="No Poster"
+                    class="movie-poster"
+                >
 
-                                <div class="movie-info">
-                                    Genre:
-                                    {{ movie.genre }}
-                                </div>
-
-                            {% endif %}
-
-
-                            {% if movie.language %}
-
-                                <div class="movie-info">
-                                    Language:
-                                    {{ movie.language }}
-                                </div>
-
-                            {% endif %}
+                {% endif %}
 
 
-                            {% if movie.release_date %}
+                <div class="movie-content">
 
-                                <div class="movie-info">
-                                    Release:
-                                    {{ movie.release_date }}
-                                </div>
-
-                            {% endif %}
-
-
-                            {% if movie.average_rating %}
-
-                                <div class="movie-rating">
-                                    ⭐
-                                    {{ movie.average_rating|floatformat:1 }}
-                                </div>
-
-                            {% else %}
-
-                                <div class="movie-rating">
-                                    ⭐ No rating yet
-                                </div>
-
-                            {% endif %}
-
-
-                            <a
-                                href="{% url 'movie_detail' movie.id %}"
-                                class="view-button"
-                            >
-                                View Movie
-                            </a>
-
-                        </div>
-
+                    <div class="movie-title">
+                        {{ movie.name }}
                     </div>
 
-                {% endfor %}
+                    {% if movie.genre %}
+
+                    <div class="movie-info">
+                        Genre:
+                        {{ movie.genre }}
+                    </div>
+
+                    {% endif %}
+
+                    {% if movie.language %}
+
+                    <div class="movie-info">
+                        Language:
+                        {{ movie.language }}
+                    </div>
+
+                    {% endif %}
+
+                    {% if movie.release_date %}
+
+                    <div class="movie-info">
+                        Release:
+                        {{ movie.release_date }}
+                    </div>
+
+                    {% endif %}
+
+                    {% if movie.average_rating %}
+
+                    <div class="movie-rating">
+                        ⭐
+                        {{ movie.average_rating|floatformat:1 }}
+                    </div>
+
+                    {% else %}
+
+                    <div class="movie-rating">
+                        ⭐ No rating yet
+                    </div>
+
+                    {% endif %}
+
+                    <a
+                        href="{% url 'movie_detail' movie.id %}"
+                        class="view-button"
+                    >
+                        View Movie
+                    </a>
+
+                </div>
 
             </div>
+
+            {% endfor %}
+
+        </div>
 
         {% else %}
 
-            <div class="empty">
-                No recommendations available yet.
-            </div>
+        <div class="empty">
+            No recommendations available yet.
+        </div>
 
         {% endif %}
 
     </div>
 
-
-    <!-- ==================================================
-         MOVIE RESULTS
-    ================================================== -->
 
     <div class="section">
 
@@ -1096,202 +916,205 @@
             🎬 Movies
         </h2>
 
-
         {% if movie_page.object_list %}
 
-            <div class="movie-grid">
+        <div class="movie-grid">
 
-                {% for movie in movie_page %}
+            {% for movie in movie_page %}
 
-                    <div class="movie-card">
-
-                        <div class="movie-content">
+            <div class="movie-card">
 
 
-                            <div class="movie-title">
-                                {{ movie.name }}
-                            </div>
+                {% if movie.image %}
+
+                <img
+                    src="{% static 'media/'|add:movie.image.name %}"
+                    alt="{{ movie.name }}"
+                    class="movie-poster"
+                    loading="lazy"
+                    onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=No+Poster';"
+                >
+
+                {% else %}
+
+                <img
+                    src="https://via.placeholder.com/300x450?text=No+Poster"
+                    alt="No Poster"
+                    class="movie-poster"
+                >
+
+                {% endif %}
 
 
-                            {% if movie.genre %}
+                <div class="movie-content">
 
-                                <div class="movie-info">
-                                    Genre:
-                                    {{ movie.genre }}
-                                </div>
-
-                            {% endif %}
+                    <div class="movie-title">
+                        {{ movie.name }}
+                    </div>
 
 
-                            {% if movie.language %}
+                    {% if movie.genre %}
 
-                                <div class="movie-info">
-                                    Language:
-                                    {{ movie.language }}
-                                </div>
+                    <div class="movie-info">
+                        Genre:
+                        {{ movie.genre }}
+                    </div>
 
-                            {% endif %}
-
-
-                            {% if movie.release_date %}
-
-                                <div class="movie-info">
-                                    Release:
-                                    {{ movie.release_date }}
-                                </div>
-
-                            {% endif %}
+                    {% endif %}
 
 
-                            {% if movie.average_rating %}
+                    {% if movie.language %}
 
-                                <div class="movie-rating">
+                    <div class="movie-info">
+                        Language:
+                        {{ movie.language }}
+                    </div>
 
-                                    ⭐
-                                    {{ movie.average_rating|floatformat:1 }}
-
-                                </div>
-
-                            {% else %}
-
-                                <div class="movie-rating">
-
-                                    ⭐ No rating yet
-
-                                </div>
-
-                            {% endif %}
+                    {% endif %}
 
 
-                            <div class="movie-bookings">
+                    {% if movie.release_date %}
 
-                                👥
+                    <div class="movie-info">
+                        Release:
+                        {{ movie.release_date }}
+                    </div>
 
-                                {{ movie.booking_count }}
-
-                                bookings
-
-                            </div>
-
-
-                            {% if movie.lowest_ticket_price %}
-
-                                <div class="movie-price">
-
-                                    ₹{{ movie.lowest_ticket_price|floatformat:2 }}
-
-                                    onwards
-
-                                </div>
-
-                            {% endif %}
+                    {% endif %}
 
 
-                            <a
-                                href="{% url 'movie_detail' movie.id %}"
-                                class="view-button"
-                            >
-                                View Movie
-                            </a>
+                    {% if movie.average_rating %}
+
+                    <div class="movie-rating">
+                        ⭐
+                        {{ movie.average_rating|floatformat:1 }}
+                    </div>
+
+                    {% else %}
+
+                    <div class="movie-rating">
+                        ⭐ No rating yet
+                    </div>
+
+                    {% endif %}
 
 
-                        </div>
+                    <div class="movie-bookings">
+
+                        👥
+
+                        {{ movie.booking_count }}
+
+                        bookings
 
                     </div>
 
-                {% endfor %}
+
+                    {% if movie.lowest_ticket_price %}
+
+                    <div class="movie-price">
+
+                        ₹{{ movie.lowest_ticket_price|floatformat:2 }}
+
+                        onwards
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <a
+                        href="{% url 'movie_detail' movie.id %}"
+                        class="view-button"
+                    >
+                        View Movie
+                    </a>
+
+                </div>
 
             </div>
 
+            {% endfor %}
 
-            <!-- ==================================================
-                 PAGINATION
-            ================================================== -->
-
-            {% if movie_page.paginator.num_pages > 1 %}
-
-                <div class="pagination">
+        </div>
 
 
-                    {% if movie_page.has_previous %}
+        {% if movie_page.paginator.num_pages > 1 %}
 
-                        <a
-                            class="page-link"
-                            href="?q={{ search_query }}&genre={{ selected_genre }}&language={{ selected_language }}&city={{ selected_city }}&theater={{ selected_theater }}&release_date={{ selected_release_date }}&min_rating={{ selected_min_rating }}&show_time={{ selected_show_time }}&sort={{ selected_sort }}&page={{ movie_page.previous_page_number }}"
-                        >
-                            Previous
-                        </a>
-
-                    {% endif %}
+        <div class="pagination">
 
 
-                    {% for number in movie_page.paginator.page_range %}
+            {% if movie_page.has_previous %}
 
-                        {% if number == movie_page.number %}
-
-                            <span
-                                class="page-link active"
-                            >
-                                {{ number }}
-                            </span>
-
-                        {% else %}
-
-                            <a
-                                class="page-link"
-                                href="?q={{ search_query }}&genre={{ selected_genre }}&language={{ selected_language }}&city={{ selected_city }}&theater={{ selected_theater }}&release_date={{ selected_release_date }}&min_rating={{ selected_min_rating }}&show_time={{ selected_show_time }}&sort={{ selected_sort }}&page={{ number }}"
-                            >
-                                {{ number }}
-                            </a>
-
-                        {% endif %}
-
-                    {% endfor %}
-
-
-                    {% if movie_page.has_next %}
-
-                        <a
-                            class="page-link"
-                            href="?q={{ search_query }}&genre={{ selected_genre }}&language={{ selected_language }}&city={{ selected_city }}&theater={{ selected_theater }}&release_date={{ selected_release_date }}&min_rating={{ selected_min_rating }}&show_time={{ selected_show_time }}&sort={{ selected_sort }}&page={{ movie_page.next_page_number }}"
-                        >
-                            Next
-                        </a>
-
-                    {% endif %}
-
-
-                </div>
+            <a
+                class="page-link"
+                href="?q={{ search_query }}&genre={{ selected_genre }}&language={{ selected_language }}&city={{ selected_city }}&theater={{ selected_theater }}&release_date={{ selected_release_date }}&min_rating={{ selected_min_rating }}&show_time={{ selected_show_time }}&sort={{ selected_sort }}&page={{ movie_page.previous_page_number }}"
+            >
+                Previous
+            </a>
 
             {% endif %}
 
 
-        {% else %}
+            {% for number in movie_page.paginator.page_range %}
 
-            <div class="empty">
+                {% if number == movie_page.number %}
 
-                <h3>
-                    No movies found
-                </h3>
+                <span class="page-link active">
+                    {{ number }}
+                </span>
 
-                <p>
-                    Try changing your search or filters.
-                </p>
+                {% else %}
 
-            </div>
+                <a
+                    class="page-link"
+                    href="?q={{ search_query }}&genre={{ selected_genre }}&language={{ selected_language }}&city={{ selected_city }}&theater={{ selected_theater }}&release_date={{ selected_release_date }}&min_rating={{ selected_min_rating }}&show_time={{ selected_show_time }}&sort={{ selected_sort }}&page={{ number }}"
+                >
+                    {{ number }}
+                </a>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            {% if movie_page.has_next %}
+
+            <a
+                class="page-link"
+                href="?q={{ search_query }}&genre={{ selected_genre }}&language={{ selected_language }}&city={{ selected_city }}&theater={{ selected_theater }}&release_date={{ selected_release_date }}&min_rating={{ selected_min_rating }}&show_time={{ selected_show_time }}&sort={{ selected_sort }}&page={{ movie_page.next_page_number }}"
+            >
+                Next
+            </a>
+
+            {% endif %}
+
+
+        </div>
 
         {% endif %}
 
 
-    </div>
+        {% else %}
 
+        <div class="empty">
+
+            <h3>
+                No movies found
+            </h3>
+
+            <p>
+                Try changing your search or filters.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
 
 </div>
 
-
-<!-- ======================================================
-     DYNAMIC MATCH COUNT
-====================================================== -->
 
 <script>
 
@@ -1304,12 +1127,7 @@
                     ".filter-box form"
                 );
 
-            const resultInfo =
-                document.querySelector(
-                    ".result-info"
-                );
-
-            if (!filterForm || !resultInfo) {
+            if (!filterForm) {
                 return;
             }
 
@@ -1325,14 +1143,6 @@
                         "change",
                         function () {
 
-                            /*
-                             * Automatically submit the form
-                             * when a filter changes.
-                             *
-                             * Django recalculates the
-                             * matching movie count.
-                             */
-
                             filterForm.submit();
 
                         }
@@ -1345,7 +1155,6 @@
     );
 
 </script>
-
 
 </body>
 

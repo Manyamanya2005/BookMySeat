@@ -51,10 +51,18 @@ except ImportError:
 # ==========================================================
 
 
+# ==========================================================
+# HOME
+# ==========================================================
+
 def home(request):
-    movies = Movie.objects.all()
+
+    movies = Movie.objects.all().order_by('-id')[:8]
+
     events = Event.objects.all()
+
     premieres = Premiere.objects.all()
+
     music_studios = MusicStudio.objects.all()
 
     return render(

@@ -23,7 +23,6 @@ urlpatterns = [
         name="admin_dashboard_export",
     ),
 
-
     # ==========================================================
     # TASK 5 - MOVIE DISCOVERY
     # SEARCH + FILTERS + SORTING + PAGINATION
@@ -41,7 +40,6 @@ urlpatterns = [
         name="movie_detail",
     ),
 
-
     # ==========================================================
     # TASK 5 - THEATERS
     # ==========================================================
@@ -51,7 +49,6 @@ urlpatterns = [
         views.theater_list,
         name="theater_list",
     ),
-
 
     # ==========================================================
     # TASK 5 - SEATS
@@ -74,7 +71,6 @@ urlpatterns = [
         views.reserve_seats,
         name="reserve_seats",
     ),
-
 
     # ==========================================================
     # PAYMENT - STRIPE
@@ -104,7 +100,6 @@ urlpatterns = [
         name="payment_cancelled",
     ),
 
-
     # ==========================================================
     # STRIPE WEBHOOK
     # ==========================================================
@@ -114,7 +109,6 @@ urlpatterns = [
         views.stripe_webhook,
         name="stripe_webhook",
     ),
-
 
     # ==========================================================
     # BOOKING
@@ -138,7 +132,6 @@ urlpatterns = [
         name="mark_watched",
     ),
 
-
     # ==========================================================
     # TASK 6 - TICKET DOWNLOAD
     # ==========================================================
@@ -149,7 +142,6 @@ urlpatterns = [
         name="download_ticket",
     ),
 
-
     # ==========================================================
     # TASK 6 - TICKET VERIFICATION
     # ==========================================================
@@ -159,7 +151,6 @@ urlpatterns = [
         views.verify_ticket,
         name="verify_ticket",
     ),
-
 
     # ==========================================================
     # REVIEWS
@@ -177,7 +168,6 @@ urlpatterns = [
         name="report_review",
     ),
 
-
     # ==========================================================
     # PAYMENT RETRY
     # ==========================================================
@@ -187,7 +177,6 @@ urlpatterns = [
         views.retry_payment,
         name="retry_payment",
     ),
-
 
     # ==========================================================
     # PASSWORD RESET
