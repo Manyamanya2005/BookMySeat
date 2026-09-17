@@ -54,25 +54,22 @@ except ImportError:
 # ==========================================================
 # HOME
 # ==========================================================
-
 def home(request):
+    from .models import Movie, Event, Premiere, MusicStudio
 
-    movies = Movie.objects.all().order_by('-id')[:8]
-
-    events = Event.objects.all()
-
-    premieres = Premiere.objects.all()
-
-    music_studios = MusicStudio.objects.all()
+    movies = Movie.objects.all().order_by("id")[:18]
+    events = Event.objects.all().order_by("id")[:4]
+    premieres = Premiere.objects.all().order_by("id")[:4]
+    music_studios = MusicStudio.objects.all().order_by("id")[:6]
 
     return render(
         request,
-        'users/home.html',
+        "users/home.html",
         {
-            'movies': movies,
-            'events': events,
-            'premieres': premieres,
-            'music_studios': music_studios,
+            "movies": movies,
+            "events": events,
+            "premieres": premieres,
+            "music_studios": music_studios,
         }
     )
 # ==========================================================
